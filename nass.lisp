@@ -97,11 +97,18 @@ Returns DEFAULT is if the lisp implementation is not supported."
 
 This is just a helper macro to make declaring the result type simpler and
 inline with what is expected of `coerce'."
-  `(the (values ,to-intentional-type &optional)
-     (convert ,object ',(ensure-car to-intentional-type)
-              ,@(if (or (> 2 (length keys)) (keywordp (car keys)))
-                    (cons t keys)
-                    keys))))
+  `(the (values ,(if (valid-type-specifier-p result-type)
+                     result-type
+                     t) &optional)
+     (convert ,object ,(if (valid-type-specifier-p result-type)
+                           `',(ensure-car result-type)
+                           result-type)
+              ,@(cond
+                 ((keywordp (car keys))
+                  (cons t keys))
+                 ((valid-type-specifier-p (car keys))
+                  (cons `',(car keys) (cdr keys)))
+                 (t keys)))))
 
 
 (defpackage #:nass.util
