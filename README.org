@@ -1,0 +1,7 @@
+* Pre pre pre alpha
+  This thing does not even assemble anything right now. If you want a
+  working assembler look past this project!
+
+  If you are still reading what is currently being done is going through
+  and defining useful deftypes to cover the various machine number sizes
+  such as: nibble, octet, word, double-word and so on.
