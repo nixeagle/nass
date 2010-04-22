@@ -123,6 +123,17 @@ The result list will be SIZE long."
   (iter (for i :from (* bits size) :downto 0 :by bits)
         (collect (ldb (byte bits i) integer))))
 
+(defmethod convert ((integer integer) (result-type (eql 'list))
+                    (input-type (eql 'bit)) &key)
+  (integer->bit-base-list integer 1))
+
+(defmethod convert ((integer integer) (result-type (eql 'list))
+                    (input-type (eql 'nass-type:octal-digit)) &key)
+  (integer->bit-base-list integer 3))
+
+(defmethod convert ((integer integer) (result-type (eql 'list))
+                    (input-type (eql 'nass-type:hexadecimal-digit)) &key)
+  (integer->bit-base-list integer 4))
 
 (defpackage #:nass.util
   (:use :cl :alexandria :eos)
