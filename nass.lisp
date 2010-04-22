@@ -71,7 +71,8 @@ Reference: http://unicode.org/glossary/#C under 'Code Point'."
   `(mod ,(expt 16 digits)))
 
 (defpackage #:convert
-  (:use :cl :alexandria :iter :eos))
+  (:use :cl :alexandria :iter :eos)
+  (:export #:conv))
 (in-package :convert)
 (defgeneric convert (object result-type input-type
                             &key &allow-other-keys)
@@ -188,7 +189,8 @@ desired."
 
 
 (defpackage #:nass.goof
-  (:use :cl :alexandria :iter))
+  (:use :cl :alexandria :iter :eos)
+  (:import-from :convert #:conv))
 (in-package :nass.goof)
 
 ;;; http://paste.lisp.org/display/98095
