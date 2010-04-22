@@ -92,12 +92,17 @@ Returns DEFAULT is if the lisp implementation is not supported."
   #+sbcl (sb-ext:valid-type-specifier-p type-specifier environment)
   #-sbcl default)
 
-(defmacro conv (type object &rest keys &key &allow-other-keys)
+(defmacro conv (object result-type &rest keys)
   "Helps implementation figure out OBJECT's new TYPE.
 
 This is just a helper macro to make declaring the result type simpler and
 inline with what is expected of `coerce'."
-  `(the (values ,type &optional) (convert ',(ensure-car type) ,object ,@keys)))
+  `(the (values ,to-intentional-type &optional)
+     (convert ,object ',(ensure-car to-intentional-type)
+              ,@(if (or (> 2 (length keys)) (keywordp (car keys)))
+                    (cons t keys)
+                    keys))))
+
 
 (defpackage #:nass.util
   (:use :cl :alexandria :eos)
