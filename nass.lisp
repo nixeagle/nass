@@ -1,0 +1,159 @@
+(defpackage #:nass.types
+  (:use :cl :alexandria :eos)
+  (:nicknames :nass-type)
+  (:export #:nibble
+           #:octet
+           #:word
+           #:unicode-point
+           #:octal-digit
+           #:double-word
+           #:mips-word
+           #:hexadecimal-digit
+           #:signed-nibble
+           #:signed-octet
+           #:signed-word
+           #:signed-double-word
+           #:signed-mips-word))
+(in-package :nass.types)
+
+(deftype nibble (&optional (size 1))
+  "4 bits, hexidecimal digit."
+  `(unsigned-byte ,(* 4 size)))
+
+(deftype signed-nibble (&optional (size 1))
+  "4 bits, -8 to 7."
+  `(signed-byte ,(* 4 size)))
+
+(deftype octet (&optional (size 1))
+  "8 bits, 2 `nibble's, a `byte'."
+  `(nibble ,(* 2 size)))
+
+(deftype signed-octet (&optional (size 1))
+  "8 bits, 2 `signed-nibble's. -128 to 127."
+  `(signed-nibble ,(* 2 size)))
+
+(deftype word (&optional (size 1))
+  "16 bits, 2 `octet's or 2 bytes."
+  `(octet ,(* 2 size)))
+
+(deftype signed-word (&optional (size 1))
+  "16 bits, 2 `signed-octet's, -32768 to 32767."
+  `(signed-octet ,(* 2 size)))
+
+(deftype double-word (&optional (size 1))
+  "Pair of words, 32 bits, 4 `octet's."
+  `(word ,(* 2 size)))
+
+(deftype signed-double-word (&optional (size 1))
+  "Pair of `signed-word's. 32 bits, -2147483648 to 2147483647."
+  `(signed-word ,(* 2 size)))
+
+(deftype mips-word (&optional (size 1))
+  "32 bits, 4 `octet's, 2 x88 `word's."
+  `(double-word ,(* 2 size)))
+
+(deftype signed-mips-word (&optional (size 1))
+  "32 bits, same as `signed-double-word'."
+  `(signed-double-word ,size))
+
+(deftype unicode-point ()
+  "Any value from 0 to #x10FFFF.
+
+Reference: http://unicode.org/glossary/#C under 'Code Point'."
+  '(integer 0 #x10FFFF))
+
+(deftype octal-digit (&optional (digits 1))
+  "0 to 7, octal numbers."
+  `(mod ,(expt 8 digits)))
+
+(deftype hexadecimal-digit (&optional (digits 1))
+  "#x0 to #xF. Range of numbers from 0 to 15."
+  `(mod ,(expt 16 digits)))
+
+(defpackage #:convert
+  (:use :cl :alexandria))
+(in-package :convert)
+(defgeneric convert (type object &key &allow-other-keys)
+  (:documentation "Convert OBJECT to TYPE."))
+
+(defmacro conv (type object &rest keys &key &allow-other-keys)
+  "Helps implementation figure out OBJECT's new TYPE.
+
+This is just a helper macro to make declaring the result type simpler and
+inline with what is expected of `coerce'."
+  `(the (values ,type &optional) (convert ',(ensure-car type) ,object ,@keys)))
+
+(defpackage #:nass.util
+  (:use :cl :alexandria :eos)
+  (:nicknames :nutil)
+  (:export #:write-binary-file
+           #:with-hex))
+(in-package :nass.util)
+
+(defun call-with-hex (thunk)
+  "Bind `*printbase*' and `*print-radix*'.
+
+Base is obviously 16 here."
+  (let ((*print-base* 16)
+        (*read-base* 16)
+        (*print-radix* t))
+    (funcall thunk)))
+
+(defmacro with-hex (&body body)
+  "Bind printer settings to sensible values for working with hex."
+  `(call-with-hex (lambda () ,@body)))
+
+(defmacro write-binary-file ((stream filespec) &body body)
+  "Output to a binary file stream that clobbers pre-existing items."
+  `(with-open-file (,stream ,filespec
+                            :direction :output
+                            :if-exists :supersede
+                            :if-does-not-exist :create
+                            :element-type 'nass-type:octet)
+     ,@body))
+
+(defmacro with-output-to-memory ((symbol &key (element-type 'nass-type:octet))
+                                 &body body)
+  "Output to a `flexi-streams:in-memory-stream'."
+  `(with-open-stream (,symbol (flexi-streams:make-in-memory-output-stream
+                               :element-type ',element-type))
+     ,@body))
+
+(defun call-with-output-to-octet-array (thunk in-memory-stream)
+  "Pass call THUNK with IN-MEMORY-STREAM returning stream's octed array."
+  (funcall thunk in-memory-stream)
+  (flexi-streams:get-output-stream-sequence in-memory-stream))
+
+(defmacro with-output-to-octet-array (symbol &body body)
+  "Output to memory stream identified by SYMBOL, returning octet array."
+  `(with-output-to-memory (,symbol)
+     (call-with-output-to-octet-array (lambda (,symbol)
+                                        ,@body)
+                                      ,symbol)))
+
+(defpackage #:nass.arch.amd64
+  (:use :cl :alexandria :nass.util :eos))
+(in-package :nass.arch.amd64)
+
+
+(defpackage #:nass.elf
+  (:use :cl :alexandria :nass.util :eos))
+(in-package :nass.elf)
+
+
+;(flexi-streams:string-to-octets "ELF" :external-format :utf8)
+
+
+(defpackage #:nass.goof
+  (:use :cl :alexandria :iter))
+(in-package :nass.goof)
+
+;;; http://paste.lisp.org/display/98095
+;;; Permission to use requested/received over irc
+;;; Thanks to Zach Beane of Wigflip
+(defun bits (integer &optional (size 8))
+  (format t "~&~v,'0B~%" size integer))
+
+;;; Thanks to Zach Beane of Wigflip
+(defun hex (integer &optional (size 4))
+  (format t "~&~v,'0X~%" size integer))
