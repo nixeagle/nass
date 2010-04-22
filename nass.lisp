@@ -111,6 +111,18 @@ inline with what is expected of `coerce'."
                   (cons `',(car keys) (cdr keys)))
                  (t keys)))))
 
+(defun integer->bit-base-list
+    (integer bits &optional (size (ceiling (log (1+ (abs integer))
+                                                (expt 2 bits)))))
+  "Convert INTEGER to base that is 2^BITS.
+
+The result list will be SIZE long."
+  (declare (integer integer)
+           (positive-fixnum bits)
+           (non-negative-fixnum size))
+  (iter (for i :from (* bits size) :downto 0 :by bits)
+        (collect (ldb (byte bits i) integer))))
+
 
 (defpackage #:nass.util
   (:use :cl :alexandria :eos)
