@@ -71,7 +71,7 @@ Reference: http://unicode.org/glossary/#C under 'Code Point'."
   `(mod ,(expt 16 digits)))
 
 (defpackage #:convert
-  (:use :cl :alexandria))
+  (:use :cl :alexandria :iter :eos))
 (in-package :convert)
 (defgeneric convert (type object &key &allow-other-keys)
   (:documentation "Convert OBJECT to TYPE."))
