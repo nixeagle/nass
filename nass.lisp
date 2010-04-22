@@ -131,6 +131,21 @@ Base is obviously 16 here."
                                         ,@body)
                                       ,symbol)))
 
+(defmacro tbd (&body define-form)
+  "State a DEFINE-FORM as needing to be done.
+
+Place a string describing what needs to be done before the define form if
+desired."
+  (let ((stuff-to-do (if (stringp (car define-form))
+                         (format nil "~%~%--------------------~%~A" (pop define-form))
+                         "")))
+    (with-gensyms (funcallable-name)
+      `(let ((,funcallable-name ,(appendf (car define-form)
+                                          (list '(error "Not yet implemented!")))))
+         (setf (documentation ,funcallable-name 'function)
+               (format nil "TBD: ~A~A" (or (documentation ,funcallable-name 'function) "")
+                       ,stuff-to-do))))))
+
 (defpackage #:nass.arch.amd64
   (:use :cl :alexandria :nass.util :eos))
 (in-package :nass.arch.amd64)
