@@ -73,8 +73,15 @@ Reference: http://unicode.org/glossary/#C under 'Code Point'."
 (defpackage #:convert
   (:use :cl :alexandria :iter :eos))
 (in-package :convert)
-(defgeneric convert (type object &key &allow-other-keys)
-  (:documentation "Convert OBJECT to TYPE."))
+(defgeneric convert (object result-type input-type
+                            &key &allow-other-keys)
+  (:documentation "Convert OBJECT to RESULT-TYPE.
+
+Specify what the type of OBJECT should be interpreted as with
+INPUT-TYPE. For example if you want to `convert' something to an array of
+hexidecimal numbers, you might define a method on `convert' where the
+RESULT-TYPE is `array' and the INPUT-TYPE is `hexadecimal-digit'."))
+
 
 (defmacro conv (type object &rest keys &key &allow-other-keys)
   "Helps implementation figure out OBJECT's new TYPE.
