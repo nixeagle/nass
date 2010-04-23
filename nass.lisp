@@ -125,6 +125,13 @@ The result list will be SIZE long."
 
 (defmethod convert ((integer integer) (result-type (eql 'list))
                     (input-type (eql 'bit)) &key)
+(defmacro define-convert ((object result-type &optional input-type &rest keys)
+                          &body body)
+  `(defmethod convert ((,object ,object) (,result-type (eql ',result-type))
+                       ,(if (and input-type (not (eq t input-type)))
+                            `(,input-type (eql ',input-type))
+                            `(,(gensym) t)) ,@(or keys (list '&key)))
+     ,@body))
   (integer->bit-base-list integer 1))
 
 (defmethod convert ((integer integer) (result-type (eql 'list))
