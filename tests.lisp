@@ -16,7 +16,7 @@
   (is (equal '(0 1) (integer->bit-base-list 4 2)))
   (is (equal '(1 1) (integer->bit-base-list 5 2)))
   ;; negative numbers
-  (is (equal '(1 1) (integer->bit-base-list -1 2))))
+  (is (equal '(3 3) (integer->bit-base-list -1 2))))
 
 
 (test (integer->bit-base-list/octal :suite :nass)
@@ -25,7 +25,7 @@
   (is (equal '(0 1) (integer->bit-base-list 8 3)))
   (is (equal '(1 1) (integer->bit-base-list 9 3)))
   ;; negative number 1 (-1)
-  (is (equal '(1 1) (integer->bit-base-list -1 3))))
+  (is (equal '(7 7) (integer->bit-base-list -1 3))))
 
 
 (test (integer->bit-base-list/hexadecimal :suite :nass)
@@ -34,7 +34,7 @@
   (is (equal '(0 1) (integer->bit-base-list 16 4)))
   (is (equal '(1 1) (integer->bit-base-list 17 4)))
   ;; negative number 1 (-1)
-  (is (equal '(1 1) (integer->bit-base-list -1 4))))
+  (is (equal '(15 15) (integer->bit-base-list -1 4))))
 
 (test (integer->bit-base-list/octet :suite :nass)
   (is (equal '(#x0A #x0B #x0C #x0D)
