@@ -154,15 +154,11 @@ The result list will be SIZE long."
                             (or keys (list '&key))))
      ,@body))
 
-(define-convert (integer list bit &key
-                         (endian :little-endian)
-                         size)
-  (integer->bit-base-list integer 1 :endian endian :size size))
+(define-convert (integer list bit &key size)
+  (integer->bit-base-list integer 1 :endian :big-endian :size size))
 
-(define-convert (integer simple-bit-vector &key
-                         (endian :little-endian)
-                         size)
-  (let ((res (conv integer list bit :endian endian :size size)))
+(define-convert (integer simple-bit-vector &key size)
+  (let ((res (conv integer list bit :endian :big-endian :size size)))
     (make-array (length res) :element-type 'bit
                 :initial-contents res)))
 
