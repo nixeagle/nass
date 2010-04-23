@@ -35,3 +35,11 @@
   (is (equal '(1 1) (integer->bit-base-list 17 4)))
   ;; negative number 1 (-1)
   (is (equal '(1 1) (integer->bit-base-list -1 4))))
+
+(test (integer->bit-base-list/octet :suite :nass)
+  (is (equal '(#x0A #x0B #x0C #x0D)
+             (integer->bit-base-list #x0A0B0C0D 8 :endian :big-endian)))
+  (is (equal '(#x0D #x0C #x0B #x0A)
+             (integer->bit-base-list #x0A0B0C0D 8 :endian :little-endian))))
+
+;;; END
