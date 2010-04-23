@@ -191,3 +191,40 @@ mod rem r/m is the addressing mode byte
 * mips
 
 * AMD64 application programmer's manual
+
+
+* processor arches
+*** x86 :little_endian:
+*** 6502 :little_endian:
+*** Z80 :little_endian:
+*** VAX :little_endian:
+*** PDP-11 :little_endian:
+
+*** Motorola :big_endian:
+
+***** 6800  :big_endian:
+
+***** 68000  :big_endian:
+
+*** PowerPC  :big_endian:
+
+*** System/370  :big_endian:
+
+*** SPARC  :big_endian:bi_endian:
+
+*** ARM :bi_endian:
+
+*** Alpha :bi_endian:
+
+*** MIPS :bi_endian:
+
+*** PA-RISC :bi_endian:
+
+*** IA64 :bi_endian:
+
+
+* [#F] TODO Middle endian
+  - http://en.wikipedia.org/wiki/Endianness#Middle-endian
+
+  Some strange format whereby two sets of 16 bits are stored in little
+  endian, but the two sets are stored in big endian.
