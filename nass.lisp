@@ -77,7 +77,9 @@ Reference: http://unicode.org/glossary/#C under 'Code Point'."
 
 (defpackage #:convert
   (:use :cl :alexandria :iter :eos)
-  (:export #:conv))
+  (:export #:conv
+           #:convert
+           #:define-convert))
 (in-package :convert)
 (defgeneric convert (object result-type input-type &key &allow-other-keys)
   (:documentation "Convert OBJECT to RESULT-TYPE.
