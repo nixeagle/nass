@@ -149,8 +149,9 @@ The result list will be SIZE long."
 (define-convert (integer list nass-type:octal-digit)
   (integer->bit-base-list integer 3))
 
-(define-convert (integer list nass-type:hexadecimal-digit)
-  (integer->bit-base-list integer 4))
+(define-convert (integer list nass-type:hexadecimal-digit &key (endian :little-endian))
+  (integer->bit-base-list integer 4 :endian endian))
+
 (define-convert (integer list nass-type:signed-octet
                          &key (endian :little-endian)
                          size)
