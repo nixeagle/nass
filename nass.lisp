@@ -128,9 +128,13 @@ inline with what is expected of `coerce'."
 The result list will be SIZE long."
   (declare (integer integer)
            (positive-fixnum bits)
-           (non-negative-fixnum size))
-  (iter (for i :from 0 :below (* bits size) :by bits)
-        (collect (ldb (byte bits i) integer))))
+           ((or null non-negative-fixnum) size)
+           (nass-type:endian endian))
+  (if (eq :little-endian endian)
+      (iter (for i :from 0 :below (* bits (1+ size)) :by bits)
+            (collect (ldb (byte bits i) integer)))
+      (iter (for i :from (* bits size) :downto 0 :by bits)
+            (collect (ldb (byte bits i) integer)))))
 
 (defmacro define-convert ((object result-type &optional input-type &rest keys)
                           &body body)
