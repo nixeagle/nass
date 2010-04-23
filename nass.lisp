@@ -74,8 +74,7 @@ Reference: http://unicode.org/glossary/#C under 'Code Point'."
   (:use :cl :alexandria :iter :eos)
   (:export #:conv))
 (in-package :convert)
-(defgeneric convert (object result-type input-type
-                            &key &allow-other-keys)
+(defgeneric convert (object result-type input-type &key &allow-other-keys)
   (:documentation "Convert OBJECT to RESULT-TYPE.
 
 Specify what the type of OBJECT should be interpreted as with
@@ -123,8 +122,6 @@ The result list will be SIZE long."
   (iter (for i :from 0 :below (* bits size) :by bits)
         (collect (ldb (byte bits i) integer))))
 
-(defmethod convert ((integer integer) (result-type (eql 'list))
-                    (input-type (eql 'bit)) &key)
 (defmacro define-convert ((object result-type &optional input-type &rest keys)
                           &body body)
   `(defmethod convert ((,object ,object) (,result-type (eql ',result-type))
@@ -132,15 +129,21 @@ The result list will be SIZE long."
                             `(,input-type (eql ',input-type))
                             `(,(gensym) t)) ,@(or keys (list '&key)))
      ,@body))
+
+(define-convert (integer list bit)
   (integer->bit-base-list integer 1))
 
-(defmethod convert ((integer integer) (result-type (eql 'list))
-                    (input-type (eql 'nass-type:octal-digit)) &key)
+(define-convert (integer bit-vector)
+  (let ((res (conv integer 'list 'bit)))
+    (make-array (length res) :element-type 'bit
+                :initial-contents res)))
+
+(define-convert (integer list nass-type:octal-digit)
   (integer->bit-base-list integer 3))
 
-(defmethod convert ((integer integer) (result-type (eql 'list))
-                    (input-type (eql 'nass-type:hexadecimal-digit)) &key)
+(define-convert (integer list nass-type:hexadecimal-digit)
   (integer->bit-base-list integer 4))
+
 
 (defpackage #:nass.util
   (:use :cl :alexandria :eos)
@@ -232,3 +235,9 @@ desired."
 ;;; Thanks to Zach Beane of Wigflip
 (defun hex (integer &optional (size 4))
   (format t "~&~v,'0X~%" size integer))
+
+(defun decimal->hexadecimal-list (integer)
+  (declare ((integer 0) integer)))
+
+
+;;; END
