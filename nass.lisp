@@ -120,12 +120,13 @@ inline with what is expected of `coerce'."
 
 (defun integer->bit-base-list
     (integer bits &key size (endian :little-endian)
-     &aux (size (if size
-                    (1- size)
-                    (floor (log (abs (if (zerop integer)
-                                         1 ;Prevent divide by 0
-                                         integer))
-                                (expt 2 bits))))))
+     &aux (size-given-p (not (not size)))
+     (size (if size
+               (1- size)
+               (floor (log (abs (if (zerop integer)
+                                    1   ;Prevent divide by 0
+                                    integer))
+                           (expt 2 bits))))))
   "Convert INTEGER to base that is 2^BITS.
 
 The result list will be SIZE long."
@@ -133,9 +134,11 @@ The result list will be SIZE long."
            (positive-fixnum bits)
            ((or null non-negative-fixnum) size)
            (nass-type:endian endian))
-  (let ((size (if (< integer 0)         ; negative numbers take an extra
-                  (1+ size)             ; element in the list for the sign
-                  size)))               ; part
+
+  ; negative numbers take an extra element in the list for the sign part
+  (let ((size (if (and (not size-given-p) (< integer 0))
+                  (1+ size)
+                  size)))
     (if (eq :little-endian endian)
         (iter (for i :from 0 :below (* bits (1+ size)) :by bits)
               (collect (ldb (byte bits i) integer)))

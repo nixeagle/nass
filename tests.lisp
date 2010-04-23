@@ -59,7 +59,9 @@ order is reversed such that #xf0 is represented as (0 15)."
   (is (equal '(1 0)
              (convert::INTEGER->BIT-BASE-LIST #x10 4 :endian :big-endian))))
 
-(test (integer->bit-base-list/positive-endians :suite :nass)
+(test (integer->bit-base-list/size-keywords :suite :nass)
   (is (equal '(0 0 9 41)
-             (convert::integer->bit-base-list 2345 8 :size 4 :endian :big-endian))))
+             (convert::integer->bit-base-list 2345 8 :size 4 :endian :big-endian)))
+  (is (equal '(255 255 246 215)
+             (convert::integer->bit-base-list -2345 8 :size 4 :endian :big-endian))))
 ;;; END
