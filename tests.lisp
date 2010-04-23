@@ -42,4 +42,10 @@
   (is (equal '(#x0D #x0C #x0B #x0A)
              (integer->bit-base-list #x0A0B0C0D 8 :endian :little-endian))))
 
+(test (integer->bit-base-list/word :suite :nass)
+  (is (equal '(#x0A0B #x0C0D)
+             (integer->bit-base-list #x0A0B0C0D 16 :endian :big-endian)))
+  (is (equal '(#x0C0D #x0A0B)
+             (integer->bit-base-list #x0A0B0C0D 16 :endian :little-endian))))
+
 ;;; END
