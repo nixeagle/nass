@@ -13,7 +13,8 @@
            #:signed-octet
            #:signed-word
            #:signed-double-word
-           #:signed-mips-word))
+           #:signed-mips-word
+           #:endian))
 (in-package :nass.types)
 
 (deftype nibble (&optional (size 1))
@@ -69,6 +70,10 @@ Reference: http://unicode.org/glossary/#C under 'Code Point'."
 (deftype hexadecimal-digit (&optional (digits 1))
   "#x0 to #xF. Range of numbers from 0 to 15."
   `(mod ,(expt 16 digits)))
+
+(deftype endian ()
+  "Computers encode bytes two different ways."
+  '(member :big-endian :little-endian))
 
 (defpackage #:convert
   (:use :cl :alexandria :iter :eos)
