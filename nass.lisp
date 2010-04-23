@@ -87,15 +87,18 @@ INPUT-TYPE. For example if you want to `convert' something to an array of
 hexidecimal numbers, you might define a method on `convert' where the
 RESULT-TYPE is `array' and the INPUT-TYPE is `hexadecimal-digit'."))
 
-(defun valid-type-specifier-p (type-specifier &key environment (default t))
-  "True if TYPE-SPECIFIER is valid.
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (defun valid-type-specifier-p (type-specifier &key environment (default t))
+    "True if TYPE-SPECIFIER is valid.
 
 This is pretty implementation specific and for now will work only on sbcl.
 
 Returns DEFAULT is if the lisp implementation is not supported."
-  #+sbcl (declare (ignore default))
-  #+sbcl (sb-ext:valid-type-specifier-p type-specifier environment)
-  #-sbcl default)
+    #+ (or sbcl ccl) (declare (ignore default))
+    #+ccl (declare (ignore environment))
+    #+sbcl (sb-ext:valid-type-specifier-p type-specifier environment)
+    #+ccl (ccl:type-specifier-p type-specifier)
+    #-(or ccl sbcl) default))
 
 (defmacro conv (object result-type &rest keys)
   "Helps implementation figure out OBJECT's new TYPE.
