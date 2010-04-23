@@ -144,24 +144,37 @@ The result list will be SIZE long."
 (defmacro define-convert ((object result-type &optional input-type &rest keys)
                           &body body)
   `(defmethod convert ((,object ,object) (,result-type (eql ',result-type))
-                       ,(if (and input-type (not (eq t input-type)))
+                       ,(if (and input-type
+                                 (not (member input-type '(t &key &rest)
+                                              :test #'eq)))
                             `(,input-type (eql ',input-type))
-                            `(,(gensym) t)) ,@(or keys (list '&key)))
+                            `(,(gensym) t)) ,@(if (member input-type '(t &key &rest)
+                                                          :test #'eq)
+                            `(,input-type ,@keys)
+                            (or keys (list '&key))))
      ,@body))
 
-(define-convert (integer list bit)
-  (integer->bit-base-list integer 1))
+(define-convert (integer list bit &key
+                         (endian :little-endian)
+                         size)
+  (integer->bit-base-list integer 1 :endian endian :size size))
 
-(define-convert (integer bit-vector)
-  (let ((res (conv integer 'list 'bit)))
+(define-convert (integer simple-bit-vector &key
+                         (endian :little-endian)
+                         size)
+  (let ((res (conv integer list bit :endian endian :size size)))
     (make-array (length res) :element-type 'bit
                 :initial-contents res)))
 
-(define-convert (integer list nass-type:octal-digit)
-  (integer->bit-base-list integer 3))
+(define-convert (integer list nass-type:octal-digit &key
+                         (endian :little-endian)
+                         size)
+  (integer->bit-base-list integer 3 :endian endian :size size))
 
-(define-convert (integer list nass-type:hexadecimal-digit &key (endian :little-endian))
-  (integer->bit-base-list integer 4 :endian endian))
+(define-convert (integer list nass-type:hexadecimal-digit &key
+                         (endian :little-endian)
+                         size)
+  (integer->bit-base-list integer 4 :endian endian :size size))
 
 (define-convert (integer list nass-type:signed-octet
                          &key (endian :little-endian)
@@ -265,8 +278,6 @@ desired."
 (defun hex (integer &optional (size 4))
   (format t "~&~v,'0X~%" size integer))
 
-(defun decimal->hexadecimal-list (integer)
-  (declare ((integer 0) integer)))
 
 
 ;;; END
