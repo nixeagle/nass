@@ -151,6 +151,15 @@ The result list will be SIZE long."
 
 (define-convert (integer list nass-type:hexadecimal-digit)
   (integer->bit-base-list integer 4))
+(define-convert (integer list nass-type:signed-octet
+                         &key (endian :little-endian)
+                         size)
+  (integer->bit-base-list integer 8 :endian endian :size size))
+
+(define-convert (integer list nass-type:signed-word &key
+                         (endian :little-endian)
+                         size)
+  (integer->bit-base-list integer 16 :endian endian :size size))
 
 
 (defpackage #:nass.util
