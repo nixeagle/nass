@@ -119,8 +119,10 @@ inline with what is expected of `coerce'."
                  (t keys)))))
 
 (defun integer->bit-base-list
-    (integer bits &optional (size (ceiling (log (1+ (abs integer))
-                                                (expt 2 bits)))))
+    (integer bits &key size (endian :little-endian)
+     &aux (size (or size
+                    (floor (log (1+ (abs integer))
+                                (expt 2 bits))))))
   "Convert INTEGER to base that is 2^BITS.
 
 The result list will be SIZE long."
