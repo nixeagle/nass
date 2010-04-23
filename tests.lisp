@@ -58,4 +58,8 @@ order is reversed such that #xf0 is represented as (0 15)."
              (convert::INTEGER->BIT-BASE-LIST #x10 4 :endian :little-endian)))
   (is (equal '(1 0)
              (convert::INTEGER->BIT-BASE-LIST #x10 4 :endian :big-endian))))
+
+(test (integer->bit-base-list/positive-endians :suite :nass)
+  (is (equal '(0 0 9 41)
+             (convert::integer->bit-base-list 2345 8 :size 4 :endian :big-endian))))
 ;;; END

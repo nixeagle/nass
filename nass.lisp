@@ -120,11 +120,12 @@ inline with what is expected of `coerce'."
 
 (defun integer->bit-base-list
     (integer bits &key size (endian :little-endian)
-     &aux (size (or size
+     &aux (size (if size
+                    (1- size)
                     (floor (log (abs (if (zerop integer)
                                          1 ;Prevent divide by 0
                                          integer))
-                                 (expt 2 bits))))))
+                                (expt 2 bits))))))
   "Convert INTEGER to base that is 2^BITS.
 
 The result list will be SIZE long."
