@@ -48,4 +48,14 @@
   (is (equal '(#x0C0D #x0A0B)
              (integer->bit-base-list #x0A0B0C0D 16 :endian :little-endian))))
 
+(test (integer->bit-base-list/positive-endians :suite :nass)
+  "Make sure endians are treated right.
+
+Big endian means the way you read the hex number, such as #xf0 is the way
+it looks in the resulting list: (15 0). When it is little endian, this
+order is reversed such that #xf0 is represented as (0 15)."
+  (is (equal '(0 1)
+             (convert::INTEGER->BIT-BASE-LIST #x10 4 :endian :little-endian)))
+  (is (equal '(1 0)
+             (convert::INTEGER->BIT-BASE-LIST #x10 4 :endian :big-endian))))
 ;;; END
