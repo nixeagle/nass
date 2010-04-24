@@ -291,6 +291,10 @@ desired."
 (defun hex (integer &optional (size 4))
   (format t "~&~v,'0X~%" size integer))
 
+(defgeneric sizeof (object)
+  (:documentation "Returns number of bits object is."))
+
+
 
 
 ;;; END
