@@ -257,6 +257,17 @@ desired."
 (in-package :nass.arch.amd64)
 
 
+(defpackage #:nass.arch.x86
+  (:use :cl :alexandria :nass.util :eos))
+
+(defpackage #:nass.arch.4004
+  (:use :cl :alexandria :nass.util :eos)
+  (:documentation "Really old processor, this is mostly for goofing off
+  and learning a bit."))
+
+(in-package :nass.arch.4004)
+
+
 (defpackage #:nass.elf
   (:use :cl :alexandria :nass.util :eos))
 (in-package :nass.elf)
