@@ -228,3 +228,10 @@ mod rem r/m is the addressing mode byte
 
   Some strange format whereby two sets of 16 bits are stored in little
   endian, but the two sets are stored in big endian.
+
+
+
+* Intel 4004
+  [[file:~/papers/machine-level/intel-4004/]]
+
+  Have the mnemonics to opcodes mapped out.
