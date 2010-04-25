@@ -235,3 +235,114 @@ mod rem r/m is the addressing mode byte
   [[file:~/papers/machine-level/intel-4004/]]
 
   Have the mnemonics to opcodes mapped out.
+
+* Intel 8008
+  http://home.germany.net/nils.eilers/8008/#regflags
+
+  Pretty simple instruction set there....
+
+
+* notes
+http://en.wikipedia.org/wiki/Comparison_of_CPU_architectures
+
+
+* known emulation arches
+*** qemu emulations
+
+arm
+cris
+m68k
+microblaze
+mips
+mips64
+mips64el
+mipsel
+ppc
+ppc64
+ppcemb
+sh4
+sh4eb
+sparc
+sparc64
+x86_64
+
+*** simh
+
+altair
+altairz80
+eclipse
+gri
+h316
+hp2100
+i1401
+i1620
+i7094
+ibm1130
+id16
+id32
+lgp
+nova
+pdp1
+pdp10
+pdp11
+pdp15
+pdp4
+pdp7
+pdp8
+pdp9
+s3
+sds
+vax
+vax780
+
+
+*** gngb
+    GBA uses EABI
+
+    emulator for gameboy classic color and others
+
+
+*** gnusim8085 :GOOD:
+
+*** gpsim :pic:microchip:
+    software emulator for Microchip PIC
+
+*** gxemul :GOOD:
+
+*** hatari :atari:st:stk:tt:falcon:
+
+*** hercules
+
+
+*** mixal
+
+*** simulpic
+
+    Microchip PIC16F84
+
+*** tiemu
+
+    TI calculators
+
+
+*** z88dk
+    15+ different z* stuff
+*** atari800
+    atari stuff
+
+*** dosemu
+
+*** vice
+    commodore stuff
+
+*** dynamips
+    cisco router emulator
+
+*** os8
+    PDP-8 emulator
+
+
+
+* manuals
+*** arm :arm:
+    http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.set.architecture/index.html
