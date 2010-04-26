@@ -357,10 +357,18 @@ desired."
 (defpackage #:nixeagle.helpers.binary-streams
   (:use :cl :flexi-streams)
   (:nicknames :nh-binary-streams)
-  (:documentation "Various helper functions for dealing with binary things."))
+  (:documentation "Various helper functions for dealing with binary things.")
+  (:export #:memory-input-stream))
 
 (in-package :nixeagle.helpers.binary-streams)
 
+(defun memory-input-stream (simple-vector)
+  "Make a `flexi-streams:in-memory-stream' using SIMPLE-VECTOR.
+
+There are no options for transformers or using part of the simple vector
+for simplicity."
+  (declare (simple-vector simple-vector))
+  (make-in-memory-input-stream simple-vector))
 
 (defpackage #:nass.goof
   (:use :cl :alexandria :iter :eos)
