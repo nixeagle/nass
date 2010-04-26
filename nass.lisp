@@ -371,9 +371,14 @@ for simplicity."
   (make-in-memory-input-stream simple-vector))
 
 (defpackage #:nass.goof
-  (:use :cl :alexandria :iter :eos)
+  (:use :cl :alexandria :iter :eos
+        ;; Going to allow nh-binary-streams to be used here as this is
+        ;; more or less my testing package and those functions are pretty
+        ;; useful here
+        :nh-binary-streams)
   (:import-from :convert #:conv))
 (in-package :nass.goof)
+
 
 ;;; http://paste.lisp.org/display/98095
 ;;; Permission to use requested/received over irc
