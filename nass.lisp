@@ -243,25 +243,6 @@ Base is obviously 16 here."
                             :element-type 'nass-type:octet)
      ,@body))
 
-(defmacro with-output-to-memory ((symbol &key (element-type 'nass-type:octet))
-                                 &body body)
-  "Output to a `flexi-streams:in-memory-stream'."
-  `(with-open-stream (,symbol (flexi-streams:make-in-memory-output-stream
-                               :element-type ',element-type))
-     ,@body))
-
-(defun call-with-output-to-octet-array (thunk in-memory-stream)
-  "Pass call THUNK with IN-MEMORY-STREAM returning stream's octed array."
-  (funcall thunk in-memory-stream)
-  (flexi-streams:get-output-stream-sequence in-memory-stream))
-
-(defmacro with-output-to-octet-array (symbol &body body)
-  "Output to memory stream identified by SYMBOL, returning octet array."
-  `(with-output-to-memory (,symbol)
-     (call-with-output-to-octet-array (lambda (,symbol)
-                                        ,@body)
-                                      ,symbol)))
-
 (defmacro tbd (&body define-form)
   "State a DEFINE-FORM as needing to be done.
 
@@ -374,6 +355,25 @@ for simplicity."
 (defun memory-output-stream ()
   "Shorter name for making an output stream with no transformers."
   (make-in-memory-output-stream))
+
+(defmacro with-output-to-memory ((symbol &key (element-type 'nass-type:octet))
+                                 &body body)
+  "Output to a `flexi-streams:in-memory-stream'."
+  `(with-open-stream (,symbol (flexi-streams:make-in-memory-output-stream
+                               :element-type ',element-type))
+     ,@body))
+
+(defun call-with-output-to-octet-array (thunk in-memory-stream)
+  "Pass call THUNK with IN-MEMORY-STREAM returning stream's octed array."
+  (funcall thunk in-memory-stream)
+  (flexi-streams:get-output-stream-sequence in-memory-stream))
+
+(defmacro with-output-to-octet-array (symbol &body body)
+  "Output to memory stream identified by SYMBOL, returning octet array."
+  `(with-output-to-memory (,symbol)
+     (call-with-output-to-octet-array (lambda (,symbol)
+                                        ,@body)
+                                      ,symbol)))
 
 (defpackage #:nass.goof
   (:use :cl :alexandria :iter :eos
