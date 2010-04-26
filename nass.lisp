@@ -75,6 +75,31 @@ Reference: http://unicode.org/glossary/#C under 'Code Point'."
   "Computers encode bytes two different ways."
   '(member :big-endian :little-endian))
 
+(defpackage #:nass.types.mips
+  (:use :cl)
+  (:nicknames :mips-type)
+  (:import-from :nass.types
+                #:octet
+                #:signed-octet)
+  (:export #:octet
+           #:halfword
+           #:word
+           #:doubleword))
+
+(in-package :nass.types.mips)
+
+(deftype halfword (&optional size)
+  "16 bits, also referred to as: H"
+  `(octet ,(* 2 size)))
+
+(deftype word (&optional size)
+  "32 bits, also referred to as: W"
+  `(halfword ,(* 2 size)))
+
+(deftype doubleword (&optional size)
+  "64 bits, also referred to as: D"
+  `(word ,(* 2 size)))
+
 (defpackage #:convert
   (:use :cl :alexandria :iter :eos)
   (:export #:conv
