@@ -358,7 +358,8 @@ desired."
   (:use :cl :flexi-streams)
   (:nicknames :nh-binary-streams)
   (:documentation "Various helper functions for dealing with binary things.")
-  (:export #:memory-input-stream))
+  (:export #:memory-input-stream
+           #:memory-output-stream))
 
 (in-package :nixeagle.helpers.binary-streams)
 
@@ -369,6 +370,10 @@ There are no options for transformers or using part of the simple vector
 for simplicity."
   (declare (simple-vector simple-vector))
   (make-in-memory-input-stream simple-vector))
+
+(defun memory-output-stream ()
+  "Shorter name for making an output stream with no transformers."
+  (make-in-memory-output-stream))
 
 (defpackage #:nass.goof
   (:use :cl :alexandria :iter :eos
