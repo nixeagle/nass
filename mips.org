@@ -1,0 +1,7 @@
+* Arch manual 1
+*** TODO FPU Data formats
+    We don't have these translated to deftypes in nass.types.mips
+
+
+*** Instructions
+    always 32 bits
