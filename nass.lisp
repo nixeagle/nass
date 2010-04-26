@@ -354,6 +354,13 @@ desired."
 
 ;(flexi-streams:string-to-octets "ELF" :external-format :utf8)
 
+(defpackage #:nixeagle.helpers.binary-streams
+  (:use :cl :flexi-streams)
+  (:nicknames :nh-binary-streams)
+  (:documentation "Various helper functions for dealing with binary things."))
+
+(in-package :nixeagle.helpers.binary-streams)
+
 
 (defpackage #:nass.goof
   (:use :cl :alexandria :iter :eos)
