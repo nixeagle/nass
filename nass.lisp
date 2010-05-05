@@ -1,20 +1,4 @@
-(defpackage #:nass.types
-  (:use :cl :alexandria :eos)
-  (:nicknames :nass-type)
-  (:export #:nibble
-           #:octet
-           #:word
-           #:unicode-point
-           #:octal-digit
-           #:double-word
-           #:mips-word
-           #:hexadecimal-digit
-           #:signed-nibble
-           #:signed-octet
-           #:signed-word
-           #:signed-double-word
-           #:signed-mips-word
-           #:endian))
+
 (in-package :nass.types)
 
 (deftype nibble (&optional (size 1))
@@ -75,16 +59,7 @@ Reference: http://unicode.org/glossary/#C under 'Code Point'."
   "Computers encode bytes two different ways."
   '(member :big-endian :little-endian))
 
-(defpackage #:nass.types.mips
-  (:use :cl)
-  (:nicknames :mips-type)
-  (:import-from :nass.types
-                #:octet
-                #:signed-octet)
-  (:export #:octet
-           #:halfword
-           #:word
-           #:doubleword))
+
 
 (in-package :nass.types.mips)
 
@@ -100,51 +75,7 @@ Reference: http://unicode.org/glossary/#C under 'Code Point'."
   "64 bits, also referred to as: D"
   `(word ,(* 2 size)))
 
-(defpackage #:convert
-  (:use :cl :alexandria :iter :eos)
-  (:export #:conv
-           #:convert
-           #:define-convert))
-(in-package :convert)
-(defgeneric convert (object result-type input-type &key &allow-other-keys)
-  (:documentation "Convert OBJECT to RESULT-TYPE.
-
-Specify what the type of OBJECT should be interpreted as with
-INPUT-TYPE. For example if you want to `convert' something to an array of
-hexidecimal numbers, you might define a method on `convert' where the
-RESULT-TYPE is `array' and the INPUT-TYPE is `hexadecimal-digit'."))
-
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  (defun valid-type-specifier-p (type-specifier &key environment (default t))
-    "True if TYPE-SPECIFIER is valid.
-
-This is pretty implementation specific and for now will work only on sbcl.
-
-Returns DEFAULT is if the lisp implementation is not supported."
-    #+ (or sbcl ccl) (declare (ignore default))
-    #+ccl (declare (ignore environment))
-    #+sbcl (sb-ext:valid-type-specifier-p type-specifier environment)
-    #+ccl (ccl:type-specifier-p type-specifier)
-    #-(or ccl sbcl) default))
-
-(defmacro conv (object result-type &rest keys)
-  "Helps implementation figure out OBJECT's new TYPE.
-
-This is just a helper macro to make declaring the result type simpler and
-inline with what is expected of `coerce'."
-  `(the (values ,(if (valid-type-specifier-p result-type)
-                     result-type
-                     t) &optional)
-     (convert ,object ,(if (valid-type-specifier-p result-type)
-                           `',(ensure-car result-type)
-                           result-type)
-              ,@(cond
-                 ((keywordp (car keys))
-                  (cons t keys))
-                 ((valid-type-specifier-p (car keys))
-                  (cons `',(car keys) (cdr keys)))
-                 (t keys)))))
-
+(in-package :nass.convert)
 (defun integer->bit-base-list
     (integer bits &key size (endian :little-endian)
      &aux (size-given-p (not (not size)))
@@ -172,18 +103,7 @@ The result list will be SIZE long."
         (iter (for i :from (* bits size) :downto 0 :by bits)
               (collect (ldb (byte bits i) integer))))))
 
-(defmacro define-convert ((object result-type &optional input-type &rest keys)
-                          &body body)
-  `(defmethod convert ((,object ,object) (,result-type (eql ',result-type))
-                       ,(if (and input-type
-                                 (not (member input-type '(t &key &rest)
-                                              :test #'eq)))
-                            `(,input-type (eql ',input-type))
-                            `(,(gensym) t)) ,@(if (member input-type '(t &key &rest)
-                                                          :test #'eq)
-                            `(,input-type ,@keys)
-                            (or keys (list '&key))))
-     ,@body))
+
 
 (define-convert (integer list bit &key size)
   (integer->bit-base-list integer 1 :endian :big-endian :size size))
@@ -214,11 +134,7 @@ The result list will be SIZE long."
   (integer->bit-base-list integer 16 :endian endian :size size))
 
 
-(defpackage #:nass.util
-  (:use :cl :alexandria :eos)
-  (:nicknames :nutil)
-  (:export #:write-binary-file
-           #:with-hex))
+
 (in-package :nass.util)
 
 (defun call-with-hex (thunk)
@@ -258,18 +174,9 @@ desired."
                (format nil "TBD: ~A~A" (or (documentation ,funcallable-name 'function) "")
                        ,stuff-to-do))))))
 
-(defpackage #:nass.arch.amd64
-  (:use :cl :alexandria :nass.util :eos))
+
 (in-package :nass.arch.amd64)
 
-
-(defpackage #:nass.arch.x86
-  (:use :cl :alexandria :nass.util :eos))
-
-(defpackage #:nass.arch.4004
-  (:use :cl :alexandria :nass.util :convert :eos)
-  (:documentation "Really old processor, this is mostly for goofing off
-  and learning a bit."))
 
 (in-package :nass.arch.4004)
 
@@ -328,19 +235,13 @@ desired."
   "Mnemonic to opcode mapping for the 4004 CPU.")
 
 
-(defpackage #:nass.elf
-  (:use :cl :alexandria :nass.util :eos))
+
 (in-package :nass.elf)
 
 
 ;(flexi-streams:string-to-octets "ELF" :external-format :utf8)
 
-(defpackage #:nixeagle.helpers.binary-streams
-  (:use :cl :flexi-streams)
-  (:nicknames :nh-binary-streams)
-  (:documentation "Various helper functions for dealing with binary things.")
-  (:export #:memory-input-stream
-           #:memory-output-stream))
+
 
 (in-package :nixeagle.helpers.binary-streams)
 
@@ -375,13 +276,7 @@ for simplicity."
                                         ,@body)
                                       ,symbol)))
 
-(defpackage #:nass.goof
-  (:use :cl :alexandria :iter :eos
-        ;; Going to allow nh-binary-streams to be used here as this is
-        ;; more or less my testing package and those functions are pretty
-        ;; useful here
-        :nh-binary-streams)
-  (:import-from :convert #:conv))
+
 (in-package :nass.goof)
 
 
@@ -400,5 +295,6 @@ for simplicity."
 
 
 
+;(defclass instruction )
 
 ;;; END
