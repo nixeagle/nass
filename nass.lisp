@@ -174,6 +174,10 @@ desired."
                (format nil "TBD: ~A~A" (or (documentation ,funcallable-name 'function) "")
                        ,stuff-to-do))))))
 
+(in-package :nass.general)
+(defclass abstract-instruction ()
+  ()
+  (:documentation "Top level abstract instruction class."))
 
 (in-package :nass.arch.amd64)
 
