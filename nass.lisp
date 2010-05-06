@@ -98,10 +98,10 @@ The result list will be SIZE long."
                   (1+ size)
                   size)))
     (if (eq :little-endian endian)
-        (iter (for i :from 0 :below (* bits (1+ size)) :by bits)
-              (collect (ldb (byte bits i) integer)))
-        (iter (for i :from (* bits size) :downto 0 :by bits)
-              (collect (ldb (byte bits i) integer))))))
+        (loop for i from 0 below (* bits (1+ size)) by bits
+           collect (ldb (byte bits i) integer))
+        (loop for i from (* bits size) downto 0 by bits
+           collect (ldb (byte bits i) integer)))))
 
 
 
