@@ -67,3 +67,7 @@
         :nh-binary-streams)
   (:import-from :convert #:conv))
 
+(defpackage #:nass.general
+  (:use :cl :nutils))
+
+;;; END
