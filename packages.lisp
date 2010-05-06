@@ -29,10 +29,10 @@
 
 
 (defpackage #:nass.convert
-  (:use :cl :nutils))
+  (:use :cl :nutils :convert))
 
 (defpackage #:nass.util
-  (:use :cl :eos)
+  (:use :cl :eos :nutils)
   (:export #:write-binary-file
            #:with-hex))
 
@@ -43,7 +43,7 @@
   (:use :cl :nass.util :eos))
 
 (defpackage #:nass.arch.4004
-  (:use :cl :nass.util :convert :eos)
+  (:use :cl :nass.util :nutils :convert :eos)
   (:documentation "Really old processor, this is mostly for goofing off
   and learning a bit."))
 
@@ -60,9 +60,10 @@
            #:with-output-to-octet-array))
 
 (defpackage #:nass.goof
-  (:use :cl :eos
+  (:use :cl :eos :nutils
         ;; Going to allow nh-binary-streams to be used here as this is
         ;; more or less my testing package and those functions are pretty
         ;; useful here
         :nh-binary-streams)
   (:import-from :convert #:conv))
+
