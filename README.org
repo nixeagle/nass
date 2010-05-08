@@ -1,7 +1,31 @@
-* Pre pre pre alpha
-  This thing does not even assemble anything right now. If you want a
-  working assembler look past this project!
+Common lisp library for assembling machine instructions in various
+architectures. This assembler will require use of the [[http://www.alu.org/mop/][MetaObject Protocol]]
+vie the portability library [[http://common-lisp.net/project/closer/][Closer MOP]].
 
-  If you are still reading what is currently being done is going through
-  and defining useful deftypes to cover the various machine number sizes
-  such as: nibble, octet, word, double-word and so on.
+Current status is somewhere between *non existant an pre-alpha*. Please do
+not use this library with the expectation of it /working/.
+
+* Setup
+  This library is currently _not_ asdf installable. You need to clone this
+  repository:
+  : git clone git://github.com/nixeagle/nass.git
+  and symlink nass.asd to some directory known to asdf-install. For
+  example:
+  : ln -s /location/known/to/asdf/ nass/nass.asd
+
+  Read on for the remaining non asdf-installable dependencies. There are
+  quite a few. With time these will become direct submodules for
+  development ease.
+
+*** Non asdf-installable dependencies
+    Nass depends on [[https://github.com/nixeagle/convert][convert]], [[http://github.com/adlai/Eos][Eos]], [[http://github.com/nixeagle/nutils][nutils]], and [[http://github.com/nixeagle/binary-data][binary-data]].
+
+    Installation of convert should be done by cloning the repository and
+    symlinking the system definition file =convert.asd=.
+    : git clone git://github.com/nixeagle/convert
+
+    The remaining three's installation instructions are described at
+    [[http://github.com/nixeagle/binary-data][binary-data]]. To avoid duplication of instructions, please read the
+    readme file on that repository.
+
+
