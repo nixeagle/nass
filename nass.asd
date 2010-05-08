@@ -5,4 +5,7 @@
   ((:file "packages")
    (:file "global")
    (:file "types")
+   (:module :convert
+            :components
+            ((:file "octets")))
    (:file "nass")))
