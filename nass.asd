@@ -9,4 +9,11 @@
             :components
             ((:file "octets")))
    (:file "util")
+   (:module :src
+            :components
+            ((:module :arch
+                      :components
+                      ((:module :4004
+                                :components
+                                ((:file "intel-4004")))))))
    (:file "nass")))
