@@ -8,4 +8,5 @@
    (:module :convert
             :components
             ((:file "octets")))
+   (:file "util")
    (:file "nass")))
