@@ -4,4 +4,5 @@
   :components
   ((:file "packages")
    (:file "global")
+   (:file "types")
    (:file "nass")))
