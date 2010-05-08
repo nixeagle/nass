@@ -2,7 +2,7 @@ Common lisp library for assembling machine instructions in various
 architectures. This assembler will require use of the [[http://www.alu.org/mop/][MetaObject Protocol]]
 vie the portability library [[http://common-lisp.net/project/closer/][Closer MOP]].
 
-Current status is somewhere between *non existant an pre-alpha*. Please do
+Current status is somewhere between *non existant and pre-alpha*. Please do
 not use this library with the expectation of it /working/.
 
 * Setup
