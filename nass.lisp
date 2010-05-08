@@ -179,6 +179,9 @@ desired."
   ()
   (:documentation "Top level abstract instruction class."))
 
+(defclass instruction-metaclass (standard-class)
+  ())
+
 (in-package :nass.arch.amd64)
 
 
@@ -293,12 +296,5 @@ for simplicity."
 ;;; Thanks to Zach Beane of Wigflip
 (defun hex (integer &optional (size 4))
   (format t "~&~v,'0X~%" size integer))
-
-(defgeneric sizeof (object)
-  (:documentation "Returns number of bits object is."))
-
-
-
-;(defclass instruction )
 
 ;;; END
