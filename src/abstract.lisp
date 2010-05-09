@@ -14,3 +14,18 @@ make sure this class is in the superclass list."))
 ;;; expressed as a single integer.
 (defgeneric opcode (assembly-object &key &allow-other-keys)
   (:documentation "Gets ASSEMBLY-OBJECT's opcode as an integer."))
+
+(define-binary-class operand-mixin () ()
+  (:documentation "Mixin for assembly operands/arguments.
+
+Operand in assembly speak means the arguments to an assembly
+instruction. For example:
+   mov     ax, 25
+
+Operands there are ax and 25."))
+
+(defgeneric operands (assembly-object)
+  (:documentation "Gets ASSEMBLY-OBJECT's applicable operands.
+
+These should be returned in an untranslated form, best if exactly how the
+operands were created."))
