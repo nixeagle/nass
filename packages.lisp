@@ -58,6 +58,10 @@
   (:use :cl :nutils :binary-data))
 
 (defpackage #:nass.abstract
-  (:use :cl :nutils :binary-data :convert))
+  (:use :cl :nutils :binary-data :convert)
+  (:export #:operands
+           #:operand-mixin
+           #:opcode
+           #:opcode-mixin))
 
 ;;; END
