@@ -31,7 +31,10 @@ Operands there are ax and 25."))
   (:documentation "Gets ASSEMBLY-OBJECT's applicable operands.
 
 These should be returned in an untranslated form, best if exactly how the
-operands were created."))
+operands were created.")
+  (:method ((object operand-mixin))
+    (error "Generic function OPERANDS needs to be defined for ~A."
+           object)))
 
 (define-binary-class addressing-mixin () ()
   (:documentation "Mixin for assembly addressing classes.
