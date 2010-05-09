@@ -29,3 +29,12 @@ Operands there are ax and 25."))
 
 These should be returned in an untranslated form, best if exactly how the
 operands were created."))
+
+(define-binary-class addressing-mixin () ()
+  (:documentation "Mixin for assembly addressing classes.
+
+Generally anything that acts as an addressing byte, bit, portion, whatever
+shoul superclass this."))
+
+
+;;; END
