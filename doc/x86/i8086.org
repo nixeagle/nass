@@ -114,6 +114,12 @@ To move =0xab= to [BX+SI].
 |-------------+------------+---------------|
 | =1011w reg= | data       | data if w = 1 |
 
+To move =0xdead= to BX.
+  : bb ad de   MOV BX, 0xDEAD
+
+To move =0xab= to BX.
+  : b3 ad de   MOV BX, 0xAB
+
 *** Memory to Accumulator (ax)
 
 | =76543210= | =76543210= | =76543210= |
