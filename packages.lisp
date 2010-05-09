@@ -41,7 +41,9 @@
 
 (defpackage #:nass.arch.x86oids
   (:use :cl :nutils :eos :binary-data :convert)
-  (:documentation ""))
+  (:documentation "")
+  (:export #:x86oid
+           #:mod-reg-r/m))
 
 (defpackage #:nass.arch.x86
   (:use :cl :nass.util :eos))
