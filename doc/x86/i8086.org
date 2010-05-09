@@ -1,0 +1,111 @@
+* Instruction format
+
+** d
+
+1 bit
+
+| binary | what?         |
+|--------+---------------|
+|      0 | to register   |
+|      1 | from register |
+|        |               |
+
+** mod
+
+2 bits
+
+| binary | what?                                                      |
+|--------+------------------------------------------------------------|
+|     00 | disp = 0*, disp-high and disp-low absent                   |
+|     01 | disp = disp-low sign extended to 16-bits, disp-high absent |
+|     10 | disp = disp-high:disp-low                                  |
+|     11 | r/m is treated as a register                               |
+
+** r/m
+
+3 bits
+
+| binary | what?                           |
+|--------+---------------------------------|
+|    000 | ea = (bx) + (si) + disp         |
+|    001 | ea = (bx) + (di) + disp         |
+|    010 | ea = (bp) + (si) + disp         |
+|    011 | ea = (bp) + (di) + disp         |
+|    100 | ea = (si) + disp                |
+|    101 | ea = (di) + disp                |
+|    110 | ea = (bp) + disp [fn:1]         |
+|    111 | ea = (bx) + disp                |
+
+[fn:1]If r/m is 110, and mod is 00, then ea = disp-high:disp-low
+
+** reg
+
+3 bits, except for the 2 bit segment registers.
+
+| binary | w = 1 | binary | w = 0 | binary | segment |
+|--------+-------+--------+-------+--------+---------|
+|    000 | ax    |    000 | al    |     00 | es      |
+|    001 | cx    |    001 | cl    |     01 | cs      |
+|    010 | dx    |    010 | dl    |     10 | ss      |
+|    011 | bx    |    011 | bl    |     11 | ds      |
+|    100 | sp    |    100 | ah    |        |         |
+|    101 | bp    |    101 | ch    |        |         |
+|    110 | si    |    110 | dh    |        |         |
+|    111 | di    |    111 | bh    |        |         |
+
+** w
+
+1 bit
+
+| binary | what? |
+|--------+-------|
+| 0      | byte  |
+| 1      | word  |
+
+* Data Transfer
+
+** MOV - move
+
+*** Register/Memory to/from Register
+
+| =76543210= | =76  543 210= |
+|------------+---------------|
+| =100010dw= | =mod reg r/m= |
+
+*** Immediate to Register/Memory
+
+| =76543210= | =76  543 210= | =76543210= | =76543210=    |
+|------------+---------------+------------+---------------|
+| =1100011w= | =mod 000 r/m= | data       | data if w = 1 |
+
+*** Immediate to Register
+
+| =76543 210= | =76543210= | =76543210=    |
+|-------------+------------+---------------|
+| =1011w reg= | data       | data if w = 1 |
+
+*** Memory to Accumulator (ax)
+
+| =76543210= | =76543210= | =76543210= |
+|------------+------------+------------|
+| =1010000w= | addr-low   | addr-high  |
+
+*** Accumulator to Memory
+
+| =76543210= | =76543210= | =76543210= |
+|------------+------------+------------|
+| =1010001w= | addr-low   | addr-high  |
+
+*** Register/Memory to Segment Register[fn:2] ***
+
+| =76543210= | =76  5 43  210= |
+|------------+-----------------|
+| =10001110= | =mod 0 reg r/m= |
+
+*** Segment Register to Register/Memory
+
+| =76543210= | =76  5 43  210= |
+|------------+-----------------|
+| =10001100= | =mod 0 reg r/m= |
+
+[fn:2] MOV CS, REGISTER/MEMORY not allowed
