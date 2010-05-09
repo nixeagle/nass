@@ -13,7 +13,10 @@ make sure this class is in the superclass list."))
 ;;; to it unless overriding reasons for the _primary_ opcode cannot be
 ;;; expressed as a single integer.
 (defgeneric opcode (assembly-object &key &allow-other-keys)
-  (:documentation "Gets ASSEMBLY-OBJECT's opcode as an integer."))
+  (:documentation "Gets ASSEMBLY-OBJECT's opcode as an integer.")
+  (:method ((object opcode-mixin) &key)
+    (error "Generic function OPCODE needs to be defined for ~A."
+           object)))
 
 (define-binary-class operand-mixin () ()
   (:documentation "Mixin for assembly operands/arguments.
