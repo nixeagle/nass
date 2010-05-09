@@ -10,8 +10,10 @@
             ((:file "octets")))
    (:file "util")
    (:module :src
+            :serial t
             :components
-            ((:module :arch
+            ((:file "abstract")
+             (:module :arch
                       :components
                       ((:module :4004
                                 :components
