@@ -72,6 +72,18 @@ If r/m is 110, and mod is 00, then ea = disp-high:disp-low.
 |------------+---------------|
 | =100010dw= | =mod reg r/m= |
 
+To move BX to AX.
+  : 89 d8   MOV AX, BX
+
+To move AX from BX (or BX to AX).
+  : 8b d8   MOV BX, AX
+
+To move AX to BX+SI.
+  : 89 00   MOV [BX+SI], AX
+
+To move BX from X+SI (or BX+SI to BX).
+  : 8b 00   MOV AX, [BX+SI]
+
 *** Immediate to Register/Memory
 
 | =76543210= | =76  543 210= | =76543210= | =76543210=    |
