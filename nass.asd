@@ -17,5 +17,8 @@
                       :components
                       ((:module :4004
                                 :components
-                                ((:file "intel-4004")))))))
+                                ((:file "intel-4004")))
+                       (:module :i8086
+                                :components
+                                ((:file "init-i8086")))))))
    (:file "nass")))

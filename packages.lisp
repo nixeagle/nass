@@ -48,8 +48,8 @@
 (defpackage #:nass.arch.x86
   (:use :cl :nass.util :eos))
 
-(defpackage #:nass.arch.x8086
-  (:use :cl :nass.util :binary-data :x8060 :convert
+(defpackage #:nass.arch.i8086
+  (:use :cl :nass.util :binary-data :convert
         :nass.arch.x86oids))
 
 (defpackage #:nass.arch.4004
