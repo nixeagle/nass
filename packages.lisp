@@ -39,8 +39,16 @@
 (defpackage #:nass.arch.amd64
   (:use :cl :nass.util :eos))
 
+(defpackage #:nass.arch.x86oids
+  (:use :cl :nutils :eos :binary-data :convert)
+  (:documentation ""))
+
 (defpackage #:nass.arch.x86
   (:use :cl :nass.util :eos))
+
+(defpackage #:nass.arch.x8086
+  (:use :cl :nass.util :binary-data :x8060 :convert
+        :nass.arch.x86oids))
 
 (defpackage #:nass.arch.4004
   (:use :cl :nass.util :nutils :convert :eos)
