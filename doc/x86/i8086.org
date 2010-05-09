@@ -126,13 +126,25 @@ To move =0xab= to BX.
 |------------+------------+------------|
 | =1010000w= | addr-low   | addr-high  |
 
+To move =[0x7c00]= to AX.
+  : a1 00 7c   MOV AX, [0x7C00]
+
+To move =[0x7c00]= to AL.
+  : a0 00 7c   MOV AL, [0x7C00]
+
 *** Accumulator to Memory
 
 | =76543210= | =76543210= | =76543210= |
 |------------+------------+------------|
 | =1010001w= | addr-low   | addr-high  |
 
-*** Register/Memory to Segment Register ***
+To move AX to =[0x7c00]=.
+  : a3 00 7c   MOV [0x7C00], AX
+
+To move AL to =[0x7c00]=.
+  : a2 00 7c   MOV [0x7C00], AL
+
+*** Register/Memory to Segment Register
 
 | =76543210= | =76  5 43  210= |
 |------------+-----------------|
@@ -140,11 +152,23 @@ To move =0xab= to BX.
 
 MOV CS, REGISTER/MEMORY is not allowed.
 
+To move AX to DS.
+  : 8e d8   MOV DS, AX
+
+To move [BX+SI] to SS.
+  : 8e 10   MOV SS, [BX+SI]
+
 *** Segment Register to Register/Memory
 
 | =76543210= | =76  5 43  210= |
 |------------+-----------------|
 | =10001100= | =mod 0 reg r/m= |
+
+To move DS to AX.
+  : 8c d8      MOV AX, DS
+
+To move [BX+SI+0x20] to SS.
+  : 8c 50 20   MOV [BX+SI+0x20], SS
 
 ** PUSH - push
 
