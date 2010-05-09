@@ -84,6 +84,12 @@ To move AX to BX+SI.
 To move BX from X+SI (or BX+SI to BX).
   : 8b 00   MOV AX, [BX+SI]
 
+To move BL to AL
+  : 8a c3   MOV AL, BL
+
+To move AL from BL.
+  : 88 c3   MOV BL, AL
+
 *** Immediate to Register/Memory
 
 | =76543210= | =76  543 210= | =76543210= | =76543210=    |
