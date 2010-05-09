@@ -1,3 +1,17 @@
+* What to Implement First
+
+From Data Transfer, important stuff is variants of MOV, PUSH, and POP. IN and OUT are also important for implementing operating systems.
+
+From Arithmetic, important stuff is variatns of ADD, INC, SUB, DEC, NEG, CMP, MUL, IMUL, DIV, and IDIV.
+
+From Logic, important stuff is NOT, SHL, SHR, AND, TEST, OR, and XOR.
+
+There is no important stuff in String Manipulation.
+
+In Control Transfer, important stuff is JMP, RET, JE/JZ, JL, JLE, JNE, JNL, JNLE, and INT.
+
+In Processor Control, important stuff is CLC, CMC, STC, CLD, STD, CLI, STI, HLT, WAIT, ESC, and LOCK.
+
 * Instruction format
 
 ** d
