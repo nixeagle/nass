@@ -126,13 +126,25 @@ To move =0xab= to BX.
 |------------+------------+------------|
 | =1010000w= | addr-low   | addr-high  |
 
+To move =[0x7c00]= to AX.
+  : a1 00 7c   MOV AX, [0x7C00]
+
+To move =[0x7c00]= to AL.
+  : a0 00 7c   MOV AL, [0x7C00]
+
 *** Accumulator to Memory
 
 | =76543210= | =76543210= | =76543210= |
 |------------+------------+------------|
 | =1010001w= | addr-low   | addr-high  |
 
-*** Register/Memory to Segment Register ***
+To move AX to =[0x7c00]=.
+  : a3 00 7c   MOV [0x7C00], AX
+
+To move AL to =[0x7c00]=.
+  : a2 00 7c   MOV [0x7C00], AL
+
+*** Register/Memory to Segment Register
 
 | =76543210= | =76  5 43  210= |
 |------------+-----------------|
@@ -140,8 +152,110 @@ To move =0xab= to BX.
 
 MOV CS, REGISTER/MEMORY is not allowed.
 
+To move AX to DS.
+  : 8e d8   MOV DS, AX
+
+To move [BX+SI] to SS.
+  : 8e 10   MOV SS, [BX+SI]
+
 *** Segment Register to Register/Memory
 
 | =76543210= | =76  5 43  210= |
 |------------+-----------------|
 | =10001100= | =mod 0 reg r/m= |
+
+To move DS to AX.
+  : 8c d8      MOV AX, DS
+
+To move [BX+SI+0x20] to SS.
+  : 8c 50 20   MOV [BX+SI+0x20], SS
+
+** PUSH - push
+
+*** Register/Memory
+
+| =76543210= | =76  543 210= |
+|------------+---------------|
+| =11111111= | =mod 110 r/m= |
+
+To push AX.
+  : ff f0         PUSH AX
+
+To push [BX+SI].
+  : ff 30         PUSH WORD [BX+SI]
+
+To push [BX+SI+0x20].
+  : ff 70 20      PUSH WORD [BX+SI+0x20]
+
+To push [BX+SI+0x1020].
+  : ff b0 20 10   PUSH WORD [BX+SI+0x1020]
+
+*** Register
+
+| =76543210= |
+|------------|
+| =01010reg= |
+
+To push AX.
+  : 50   PUSH AX
+
+To push BX.
+  : 53   PUSH BX
+
+*** Segment Register
+
+| =765 43  210= |
+|---------------|
+| =000 reg 110= |
+
+To push ES.
+  : 06   PUSH ES
+
+To push CS.
+  : 0e   PUSH CS
+
+** POP - pop
+
+*** Register/Memory
+
+| =76543210= | =76  543 210= |
+|------------+---------------|
+| =10001111= | =mod 000 r/m= |
+
+To pop AX.
+  : 8f c0         POP AX
+
+To pop [BX+SI].
+  : 8f 00         POP WORD [BX+SI]
+
+To pop [BX+SI+0x20].
+  : 8f 40 20      POP WORD [BX+SI+0x20]
+
+To pop [BX+SI+0x1020].
+  : 8f 80 20 10   POP WORD [BX+SI+0x1020]
+
+*** Register
+
+| =76543210= |
+|------------|
+| =01011reg= |
+
+To pop AX.
+  : 58   POP AX
+
+To pop BX.
+  : 5b   POP BX
+
+*** Segment Register
+
+| =765 43  210= |
+|---------------|
+| =000 reg 111= |
+
+To pop ES.
+  : 07   POP ES
+
+To pop DS.
+  : 1f   POP DS
+
+It is impossible to pop CS.
