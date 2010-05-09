@@ -106,7 +106,7 @@ To move =0xdead= to [BX+SI].
   : c7 00 ad de   MOV WORD [BX+SI], 0xDEAD
 
 To move =0xab= to [BX+SI].
-  : c6 00 ab      MOV BYTE [BX+SI], 0xDEAD
+  : c6 00 ab      MOV BYTE [BX+SI], 0xAB
 
 *** Immediate to Register
 
