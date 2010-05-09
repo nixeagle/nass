@@ -283,3 +283,15 @@ To output AX to DX.
 To output AL to DX.
   : ee   OUT DX, AL
 
+** XLAT - translate byte to AL
+
+| =76543210= |
+|------------|
+| =11010111= | 
+
+To translate a byte to AL.
+  : d7   XLAT
+
+Nasm calls this XLATB; however, the docs say XLAT.
+
+
