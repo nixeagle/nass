@@ -1,3 +1,17 @@
+* What to Implement First
+
+From Data Transfer, important stuff is variants of MOV, PUSH, and POP. IN and OUT are also important for implementing operating systems.
+
+From Arithmetic, important stuff is variatns of ADD, INC, SUB, DEC, NEG, CMP, MUL, IMUL, DIV, and IDIV.
+
+From Logic, important stuff is NOT, SHL, SHR, AND, TEST, OR, and XOR.
+
+There is no important stuff in String Manipulation.
+
+In Control Transfer, important stuff is JMP, RET, JE/JZ, JL, JLE, JNE, JNL, JNLE, and INT.
+
+In Processor Control, important stuff is CLC, CMC, STC, CLD, STD, CLI, STI, HLT, WAIT, ESC, and LOCK.
+
 * Instruction format
 
 ** d
@@ -283,3 +297,86 @@ To output AX to DX.
 To output AL to DX.
   : ee   OUT DX, AL
 
+** XLAT - translate byte to AL
+
+| =76543210= |
+|------------|
+| =11010111= | 
+
+To translate a byte to AL.
+  : d7   XLAT
+
+Nasm calls this XLATB; however, the docs say XLAT.
+
+** LEA - load EA to register
+
+| =76543210= | =76  543 210= |
+|------------+---------------|
+| =10001101= | =mod reg r/m= | 
+
+This can be replaced by a MOV.
+
+To load [BX+SI] to AX.
+  : 8d 00   LEA AX, [BX+SI]
+
+** LDS - load pointer to DS
+
+| =76543210= | =76  543 210= |
+|------------+---------------|
+| =11000101= | =mod reg r/m= |
+
+The first word at [BX+SI] is put into the register. The second word is put into DS.
+
+To load [BX+SI] to AX, DS.
+  : c5 00   LDS AX, [BX+SI]
+
+** LES - load pointer to ES
+
+| =76543210= | =76  543 210= |
+|------------+---------------|
+| =11000100= | =mod reg r/m= |
+
+The first word at [BX+SI] is put into the register. The second word is put into DS.
+
+To load [BX+SI] to AX, DS.
+  : c4 00   LES AX, [BX+SI]
+
+** LAHF - load AH with FLAGS
+
+| =76543210= |
+|------------|
+| =10011111= | 
+
+To load AH from the low byte of FLAGS.
+  : 9f   LAHF
+
+** SAHF - store AH into FLAGS
+
+| =76543210= |
+|------------|
+| =10011110= | 
+
+To load AH to the low byte of FLAGS.
+  : 9e   SAHF
+
+** PUSHF - push FLAGS
+
+| =76543210= |
+|------------|
+| =10011100= | 
+
+Nasm calls this PUSHFW.
+
+To push FLAGS.
+  : 9c   PUSHF
+
+** POPF - pop FLAGS
+
+| =76543210= |
+|------------|
+| =10011101= | 
+
+Nasm calls this POPFW.
+
+To pop FLAGS.
+  : 9d   POPF
