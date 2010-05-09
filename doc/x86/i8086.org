@@ -294,4 +294,75 @@ To translate a byte to AL.
 
 Nasm calls this XLATB; however, the docs say XLAT.
 
+** LEA - load EA to register
 
+| =76543210= | =76  543 210= |
+|------------+---------------|
+| =10001101= | =mod reg r/m= | 
+
+This can be replaced by a MOV.
+
+To load [BX+SI] to AX.
+  : 8d 00   LEA AX, [BX+SI]
+
+** LDS - load pointer to DS
+
+| =76543210= | =76  543 210= |
+|------------+---------------|
+| =11000101= | =mod reg r/m= |
+
+The first word at [BX+SI] is put into the register. The second word is put into DS.
+
+To load [BX+SI] to AX, DS.
+  : c5 00   LDS AX, [BX+SI]
+
+** LES - load pointer to ES
+
+| =76543210= | =76  543 210= |
+|------------+---------------|
+| =11000100= | =mod reg r/m= |
+
+The first word at [BX+SI] is put into the register. The second word is put into DS.
+
+To load [BX+SI] to AX, DS.
+  : c4 00   LES AX, [BX+SI]
+
+** LAHF - load AH with FLAGS
+
+| =76543210= |
+|------------|
+| =10011111= | 
+
+To load AH from the low byte of FLAGS.
+  : 9f   LAHF
+
+** SAHF - store AH into FLAGS
+
+| =76543210= |
+|------------|
+| =10011110= | 
+
+To load AH to the low byte of FLAGS.
+  : 9e   SAHF
+
+** PUSHF - push FLAGS
+
+| =76543210= |
+|------------|
+| =10011100= | 
+
+Nasm calls this PUSHFW.
+
+To push FLAGS.
+  : 9c   PUSHF
+
+** POPF - pop FLAGS
+
+| =76543210= |
+|------------|
+| =10011101= | 
+
+Nasm calls this POPFW.
+
+To pop FLAGS.
+  : 9d   POPF
