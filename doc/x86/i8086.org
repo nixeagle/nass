@@ -81,7 +81,7 @@ To move AX from BX (or BX to AX).
 To move AX to BX+SI.
   : 89 00   MOV [BX+SI], AX
 
-To move BX from X+SI (or BX+SI to BX).
+To move AX from [BX+SI] (or BX+SI to AX).
   : 8b 00   MOV AX, [BX+SI]
 
 To move BL to AL
@@ -95,6 +95,18 @@ To move AL from BL.
 | =76543210= | =76  543 210= | =76543210= | =76543210=    |
 |------------+---------------+------------+---------------|
 | =1100011w= | =mod 000 r/m= | data       | data if w = 1 |
+
+To move =0xdead= to AX.
+  : c7 c0 ad de   MOV AX, 0xDEAD
+
+To move =0xab= to AL.
+  : c6 c0 ab      MOV AL, 0xAB
+
+To move =0xdead= to [BX+SI]. 
+  : c7 00 ad de   MOV WORD [BX+SI], 0xDEAD
+
+To move =0xab= to [BX+SI].
+  : c6 00 ab      MOV BYTE [BX+SI], 0xDEAD
 
 *** Immediate to Register
 
