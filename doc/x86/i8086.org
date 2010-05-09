@@ -259,3 +259,27 @@ To pop DS.
   : 1f   POP DS
 
 It is impossible to pop CS.
+
+** OUT - output to
+
+*** Fixed Port
+
+| =76543210= | =76543210= |
+|------------+------------|
+| =1110011w= | port       | 
+
+To output AX to 0x60.
+  : e7 60   OUT 0x60, AX
+
+*** Variable Port
+
+| =76543210= |
+|------------+
+| =1110111w= |
+
+To output AX to DX.
+  : ef   OUT DX, AX
+
+To output AL to DX.
+  : ee   OUT DX, AL
+
