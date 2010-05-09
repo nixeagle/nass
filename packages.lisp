@@ -50,24 +50,14 @@
 (defpackage #:nass.elf
   (:use :cl :nass.util :eos))
 
-(defpackage #:nixeagle.helpers.binary-streams
-  (:use :cl :flexi-streams)
-  (:nicknames :nh-binary-streams)
-  (:documentation "Various helper functions for dealing with binary things.")
-  (:export #:memory-input-stream
-           #:memory-output-stream
-           #:with-output-to-memory
-           #:with-output-to-octet-array))
-
 (defpackage #:nass.goof
-  (:use :cl :eos :nutils
-        ;; Going to allow nh-binary-streams to be used here as this is
-        ;; more or less my testing package and those functions are pretty
-        ;; useful here
-        :nh-binary-streams)
+  (:use :cl :eos :nutils :binary-data)
   (:import-from :convert #:conv))
 
 (defpackage #:nass.general
-  (:use :cl :nutils))
+  (:use :cl :nutils :binary-data))
+
+(defpackage #:nass.abstract
+  (:use :cl :nutils :binary-data :convert))
 
 ;;; END
