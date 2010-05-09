@@ -33,10 +33,10 @@
 |    011 | ea = (bp) + (di) + disp         |
 |    100 | ea = (si) + disp                |
 |    101 | ea = (di) + disp                |
-|    110 | ea = (bp) + disp [fn:1]         |
+|    110 | ea = (bp) + disp                |
 |    111 | ea = (bx) + disp                |
 
-[fn:1]If r/m is 110, and mod is 00, then ea = disp-high:disp-low
+If r/m is 110, and mod is 00, then ea = disp-high:disp-low.
 
 ** reg
 
@@ -96,16 +96,16 @@
 |------------+------------+------------|
 | =1010001w= | addr-low   | addr-high  |
 
-*** Register/Memory to Segment Register[fn:2] ***
+*** Register/Memory to Segment Register ***
 
 | =76543210= | =76  5 43  210= |
 |------------+-----------------|
 | =10001110= | =mod 0 reg r/m= |
+
+MOV CS, REGISTER/MEMORY is not allowed.
 
 *** Segment Register to Register/Memory
 
 | =76543210= | =76  5 43  210= |
 |------------+-----------------|
 | =10001100= | =mod 0 reg r/m= |
-
-[fn:2] MOV CS, REGISTER/MEMORY not allowed
