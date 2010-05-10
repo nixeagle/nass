@@ -87,6 +87,7 @@ If r/m is 110, and mod is 00, then ea = disp-high:disp-low.
 * Data Transfer
 
 ** MOV - move
+   Note that this is actually two instruction classes [fn:1]
 
 *** Register/Memory to/from Register
 
