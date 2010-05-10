@@ -1,16 +1,20 @@
 * What to Implement First
 
-From Data Transfer, important stuff is variants of MOV, PUSH, and POP. IN and OUT are also important for implementing operating systems.
+From Data Transfer, important stuff is variants of MOV, PUSH, and POP. IN
+and OUT are also important for implementing operating systems.
 
-From Arithmetic, important stuff is variatns of ADD, INC, SUB, DEC, NEG, CMP, MUL, IMUL, DIV, and IDIV.
+From Arithmetic, important stuff is variatns of ADD, INC, SUB, DEC, NEG,
+CMP, MUL, IMUL, DIV, and IDIV.
 
 From Logic, important stuff is NOT, SHL, SHR, AND, TEST, OR, and XOR.
 
 There is no important stuff in String Manipulation.
 
-In Control Transfer, important stuff is JMP, RET, JE/JZ, JL, JLE, JNE, JNL, JNLE, and INT.
+In Control Transfer, important stuff is JMP, RET, JE/JZ, JL, JLE, JNE,
+JNL, JNLE, and INT.
 
-In Processor Control, important stuff is CLC, CMC, STC, CLD, STD, CLI, STI, HLT, WAIT, ESC, and LOCK.
+In Processor Control, important stuff is CLC, CMC, STC, CLD, STD, CLI,
+STI, HLT, WAIT, ESC, and LOCK.
 
 * Instruction format
 
@@ -116,7 +120,7 @@ To move =0xdead= to AX.
 To move =0xab= to AL.
   : c6 c0 ab      MOV AL, 0xAB
 
-To move =0xdead= to [BX+SI]. 
+To move =0xdead= to [BX+SI].
   : c7 00 ad de   MOV WORD [BX+SI], 0xDEAD
 
 To move =0xab= to [BX+SI].
@@ -280,7 +284,7 @@ It is impossible to pop CS.
 
 | =76543210= | =76543210= |
 |------------+------------|
-| =1110011w= | port       | 
+| =1110011w= | port       |
 
 To output AX to 0x60.
   : e7 60   OUT 0x60, AX
@@ -301,7 +305,7 @@ To output AL to DX.
 
 | =76543210= |
 |------------|
-| =11010111= | 
+| =11010111= |
 
 To translate a byte to AL.
   : d7   XLAT
@@ -312,7 +316,7 @@ Nasm calls this XLATB; however, the docs say XLAT.
 
 | =76543210= | =76  543 210= |
 |------------+---------------|
-| =10001101= | =mod reg r/m= | 
+| =10001101= | =mod reg r/m= |
 
 This can be replaced by a MOV.
 
@@ -345,7 +349,7 @@ To load [BX+SI] to AX, DS.
 
 | =76543210= |
 |------------|
-| =10011111= | 
+| =10011111= |
 
 To load AH from the low byte of FLAGS.
   : 9f   LAHF
@@ -354,7 +358,7 @@ To load AH from the low byte of FLAGS.
 
 | =76543210= |
 |------------|
-| =10011110= | 
+| =10011110= |
 
 To load AH to the low byte of FLAGS.
   : 9e   SAHF
@@ -363,7 +367,7 @@ To load AH to the low byte of FLAGS.
 
 | =76543210= |
 |------------|
-| =10011100= | 
+| =10011100= |
 
 Nasm calls this PUSHFW.
 
@@ -374,7 +378,7 @@ To push FLAGS.
 
 | =76543210= |
 |------------|
-| =10011101= | 
+| =10011101= |
 
 Nasm calls this POPFW.
 
