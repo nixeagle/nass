@@ -195,6 +195,14 @@ Also known as fwait."))
 
 Also gives you a sexually transmitted disease."))
 
+(define-binary-class clear-interrupt (zero-operand-opcode)
+  ((opcode :initform #xFA :octets 1))
+  (:documentation "cli: Clear interrupt bit."))
+
+(define-binary-class set-interrupt (zero-operand-opcode)
+  ((opcode :initform #xFB :octets 1))
+  (:documentation "sti: Set interrupt bit."))
+
 (deftype valid-opcode-register-fields ()
   "8 valid fields for the 3 bits in an opcode (when used)."
   '(member :ax :bx :cx :dx :sp :dp :si :di))
