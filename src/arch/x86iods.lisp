@@ -47,6 +47,9 @@ MEMBERS is a list of acceptable values for each machine register."
 
 
 ;;; See http://www.arl.wustl.edu/~lockwood/class/cs306/books/artofasm/Chapter_3/CH03-3.html#HEADING3-102
+;;;
+;;; These do _NOT_ seem to match up with what Intel64 mentions or what
+;;; ndisasm shows for 16, 32 or 64 bits.
 (deftype valid-direct-address-instruction-opcodes ()
   "Valid keywords matching up to opcode classes.
 
@@ -67,7 +70,7 @@ These keywords will translate to the correct binary opcodes."
     (member :immediate :indirect :indexed :direct)))
 
 (define-binary-class direct-address-opcode-byte
-    (nass.abstract:opcode x86oid)
+    (x86oid)
   ((instruction-class :bits 3
                       :type valid-direct-address-instruction-opcodes
                       :initarg :instruction-class)
@@ -79,6 +82,45 @@ These keywords will translate to the correct binary opcodes."
            :type valid-direct-address-instruction-mmm
            :documentation "register, immediate, indirect, indexed, direct."
            :initarg :memory)))
+
+(macrolet ((define-binary-slot-value (keyword value-integer &optional docstring)
+             (declare (type (or null string) docstring)
+                      (keyword keyword)
+                      (non-negative-integer value-integer))
+             `(defmethod binary-slot-value
+                  ((value (eql ,keyword)) (slot t)
+                   (name t) (object direct-address-opcode-byte))
+                ,@(list docstring
+                 value-integer))))
+  (define-binary-slot-value :ax 0)
+  (define-binary-slot-value :bx 1)
+  (define-binary-slot-value :cx 2)
+  (define-binary-slot-value :dx 3)
+  (define-binary-slot-value :indirect 4
+    "Indirect addressing mode, the value in the [bx] register.")
+  (define-binary-slot-value :indexed 4
+    "Indexed addressing mode, constant and the value in [bx] register.")
+  (define-binary-slot-value :direct 6
+    "Direct addressing mode, fetch location in memory, example: [1000].")
+  (define-binary-slot-value :immediate 7
+    "Immediate addressing mode, put constant in destination register.")
+  (define-binary-slot-value :special 0)
+  (define-binary-slot-value :or 1)
+  (define-binary-slot-value :and 2)
+  (define-binary-slot-value :cmp 3)
+  ;; Long form of cmp (compare)... sdkmvx tell me your thoughts if this
+  ;; and subtract below are useful or if we should just stick to the short
+  ;; assembly names. They irk me though.
+  (define-binary-slot-value :compare 3)
+  (define-binary-slot-value :sub 4)
+  (define-binary-slot-value :subtract 4)
+  (define-binary-slot-value :add 5)
+  (define-binary-slot-value :mov-reg-mem 6)
+  (define-binary-slot-value :mov-reg-reg 6)
+  (define-binary-slot-value :mov-reg-const 6)
+  (define-binary-slot-value :mov-mem-reg 7))
+
+
 
 
 ;;; END
