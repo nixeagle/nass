@@ -171,6 +171,17 @@ assembler."))
 
 Also known as fwait."))
 
+(define-binary-class clear-carry (zero-operand-opcode)
+  ((opcode :initform #xF8 :octets 1))
+  (:documentation "clc: Clear carry bit."))
+
+(define-binary-class complement-carry (zero-operand-opcode)
+  ((opcode :initform #xF5 :octets 1))
+  (:documentation "cmc: Complement carry bit."))
+
+(define-binary-class set-carry (zero-operand-opcode)
+  ((opcode :initform #xF9 :octets 1))
+  (:documentation "stc: Set carry bit."))
 
 (deftype valid-opcode-register-fields ()
   "8 valid fields for the 3 bits in an opcode (when used)."
