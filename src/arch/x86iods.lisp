@@ -131,4 +131,10 @@ For example: HLT, NOP
 Do not use this for PUSH or POP or anything that includes registers in the
 opcode. These can be encoded in a simpler manner."))
 
+(define-binary-class nop (zero-operand-opcode)
+  ((opcode :initform #x90 :octets 1))
+  (:documentation "Does no instruction.
+
+There are multibyte NOPs as well, these are TBD."))
+
 ;;; END
