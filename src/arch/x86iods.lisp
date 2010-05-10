@@ -158,5 +158,11 @@ assembly instruction with no arguments (explicit). xlat allows one operand
 for the purpose of documentation and is not yet supplied in this
 assembler."))
 
+(define-binary-class wait (zero-operand-opcode)
+  ((opcode :initform #x9B :octets 1))
+  (:documentation
+   "wait: Check for pending unmasked floating point exceptions.
+
+Also known as fwait."))
 
 ;;; END
