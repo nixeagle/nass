@@ -1,0 +1,4 @@
+Useful links:
+
+* General
+  - [[http://www.iecc.com/linker/][linkers and loaders]]
