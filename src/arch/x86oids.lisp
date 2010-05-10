@@ -175,33 +175,69 @@ Also known as fwait."))
 
 (define-binary-class clear-carry (zero-operand-opcode)
   ((opcode :initform #xF8 :octets 1))
-  (:documentation "clc: Clear carry bit."))
+  (:documentation "clc: Clear carry bit.
+
+The carry flag is (of course) used for multiprecision arithmetic
+operations. It is also used to denote an unsigned overflow.
+Many boolean operations use it because it is easy to set
+and clear."))
 
 (define-binary-class complement-carry (zero-operand-opcode)
   ((opcode :initform #xF5 :octets 1))
-  (:documentation "cmc: Complement carry bit."))
+  (:documentation "cmc: Complement carry bit.
+
+The carry flag is (of course) used for multiprecision arithmetic
+operations. It is also used to denote an unsigned overflow.
+Many boolean operations use it because it is easy to set
+and clear."))
 
 (define-binary-class set-carry (zero-operand-opcode)
   ((opcode :initform #xF9 :octets 1))
-  (:documentation "stc: Set carry bit."))
+  (:documentation "stc: Set carry bit.
+
+The carry flag is (of course) used for multiprecision arithmetic
+operations. It is also used to denote an unsigned overflow.
+Many boolean operations use it because it is easy to set
+and clear."))
 
 (define-binary-class clear-direction (zero-operand-opcode)
   ((opcode :initform #xFC :octets 1))
-  (:documentation "cld: Clear direction bit."))
+  (:documentation "cld: Clear direction bit.
+
+The direction flag controls what happens after operating on a string
+element. If 0, si and di are incremented by 1. If 1, si and di are
+decremented by 1."))
 
 (define-binary-class set-direction (zero-operand-opcode)
   ((opcode :initform #xfd :octets 1))
   (:documentation "std: Set direction bit.
 
-Also gives you a sexually transmitted disease."))
+Also gives you a sexually transmitted disease.
+
+The direction flag controls what happens after operating on a string
+element. If 0, si and di are incremented by 1. If 1, si and di are
+decremented by 1."))
 
 (define-binary-class clear-interrupt (zero-operand-opcode)
   ((opcode :initform #xFA :octets 1))
-  (:documentation "cli: Clear interrupt bit."))
+  (:documentation "cli: Clear interrupt bit.
+
+Disables hardware interrupts. Note that the non-maskable interrupt
+is obviously not masked and software interrupts will not be
+masked."))
 
 (define-binary-class set-interrupt (zero-operand-opcode)
   ((opcode :initform #xFB :octets 1))
-  (:documentation "sti: Set interrupt bit."))
+  (:documentation "sti: Set interrupt bit.
+
+Reenables hardware interrupts."))
+
+(define-binary-class halt (zero-operand-opcode)
+  ((opcode :initform #xF4 :octets 1))
+  (:documentation "hlt: Halt.
+
+This makes the CPU halt until the next interrupt. Useful to conserve
+power as it does less than constantly jumping to yourself."))
 
 (deftype valid-opcode-register-fields ()
   "8 valid fields for the 3 bits in an opcode (when used)."
