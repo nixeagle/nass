@@ -61,4 +61,9 @@ These keywords will translate to the correct binary opcodes."
     :accumulator-register :base-address-register
     :count-register :data-register))
 
+(deftype valid-direct-address-instruction-mmm ()
+  "Keywords matching rr registers and 4 other addressing modes."
+  '(or valid-direct-address-instruction-mmm
+    (member :immediate :indirect :indexed :direct)))
+
 ;;; END
