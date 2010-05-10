@@ -45,4 +45,14 @@ MEMBERS is a list of acceptable values for each machine register."
    (r/m :bits 3 :initarg :r/m :type (mod 8))
    (reg/opcode :bits 3 :initarg :reg/opcode :type (mod 8))))
 
+
+;;; See http://www.arl.wustl.edu/~lockwood/class/cs306/books/artofasm/Chapter_3/CH03-3.html#HEADING3-102
+(deftype valid-direct-address-instruction-opcodes ()
+  "Valid keywords matching up to opcode classes.
+
+These keywords will translate to the correct binary opcodes."
+  '(member :special :or :and :cmp :sub :add
+    :mov-reg-mem :mov-reg-reg :mov-reg-const
+    :mov-mem-reg))
+
 ;;; END
