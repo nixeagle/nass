@@ -42,6 +42,7 @@
 (defpackage #:nass.arch.x86oids
   (:use :cl :nutils :eos :binary-data :convert)
   (:documentation "")
+  (:shadow #:push)
   (:export #:x86oid
            #:mod-reg-r/m))
 

@@ -171,7 +171,7 @@ Also known as fwait."))
   '(member :ax :bx :cx :dx :sp :dp :si :di))
 
 (define-binary-class opcode-register-field (x86oid)
-  ((register :bits 3
+  (#+ () (register :bits 3
              :type valid-opcode-register-fields
              :documentation "Access general purpose registers in opcode."
              :initarg :register))
@@ -196,5 +196,13 @@ These are typically no operand instructions such as POP and PUSH."))
   (define-binary-slot-value :bp 5)
   (define-binary-slot-value :si 6)
   (define-binary-slot-value :di 7))
+
+(define-binary-class push (opcode-register-field)
+  ((opcode :bits 5 :initform #b01010)
+   (register :bits 3
+             :type valid-opcode-register-fields
+             :documentation "Access general purpose registers in opcode."
+             :initarg :register)))
+
 
 ;;; END
