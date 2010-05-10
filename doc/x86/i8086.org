@@ -16,6 +16,10 @@ JNL, JNLE, and INT.
 In Processor Control, important stuff is CLC, CMC, STC, CLD, STD, CLI,
 STI, HLT, WAIT, ESC, and LOCK.
 
+
+*** AoA
+    sub, cmp, and, or, not, je, jne, jb, jbe, ja, jae, jmp, brk, iret,
+    halt, get, and put. [fn:1]
 * Instruction format
 
 ** d
@@ -384,3 +388,8 @@ Nasm calls this POPFW.
 
 To pop FLAGS.
   : 9d   POPF
+
+
+* Footnotes
+
+[fn:1] http://www.arl.wustl.edu/~lockwood/class/cs306/books/artofasm/Chapter_3/CH03-3.html#HEADING3-37
