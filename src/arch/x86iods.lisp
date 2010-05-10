@@ -55,4 +55,10 @@ These keywords will translate to the correct binary opcodes."
     :mov-reg-mem :mov-reg-reg :mov-reg-const
     :mov-mem-reg))
 
+(deftype valid-direct-address-instruction-rr ()
+  "Keywords matching with the ax, bx, cx, dx registers."
+  '(member :ax :bx :cx :dx
+    :accumulator-register :base-address-register
+    :count-register :data-register))
+
 ;;; END
