@@ -66,4 +66,19 @@ These keywords will translate to the correct binary opcodes."
   '(or valid-direct-address-instruction-rr
     (member :immediate :indirect :indexed :direct)))
 
+(define-binary-class direct-address-opcode-byte
+    (nass.abstract:opcode x86oid)
+  ((instruction-class :bits 3
+                      :type valid-direct-address-instruction-opcodes
+                      :initarg :instruction-class)
+   (register :bits 2
+             :type valid-direct-address-instruction-rr
+             :documentation "Registers only."
+             :initarg :register)
+   (memory :bits 3
+           :type valid-direct-address-instruction-mmm
+           :documentation "register, immediate, indirect, indexed, direct."
+           :initarg :memory)))
+
+
 ;;; END
