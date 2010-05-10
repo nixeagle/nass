@@ -15,3 +15,8 @@
     (with the fancy lisp example), but the better documented the classes
     are, the better online assembler documentation will exist when this is
     done.
+*** TODO Have to write to a binary format :binary:format:
+    We can't get away from putting the machine code into some sort of
+    encoded format, until then aligouri in #qemu suggests:
+    : mmap(); /* some file */
+    : addr = mmap() ((void (*)(void))addr)();
