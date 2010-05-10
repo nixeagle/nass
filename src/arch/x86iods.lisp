@@ -3,6 +3,9 @@
 (define-binary-class x86oid (little-endian) ())
 
 (macrolet ((define-type (name full-name width &rest members)
+             "Define NAME and FULL-NAME as types that make sense in the reg bits.
+
+MEMBERS is a list of acceptable values for each machine register."
              (declare (symbol name full-name)
                       ((unsigned-byte 1) width))
              (let ((documentation
