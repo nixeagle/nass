@@ -83,6 +83,10 @@ These keywords will translate to the correct binary opcodes."
            :documentation "register, immediate, indirect, indexed, direct."
            :initarg :memory)))
 
+(deftype valid-opcode-register-fields ()
+  "8 valid fields for the 3 bits in an opcode (when used)."
+  '(member :ax :bx :cx :dx :sp :dp :si :di))
+
 (macrolet ((define-binary-slot-value (keyword value-integer &optional docstring)
              (declare (type (or null string) docstring)
                       (keyword keyword)
