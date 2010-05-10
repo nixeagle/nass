@@ -142,7 +142,7 @@ There are multibyte NOPs as well, these are TBD."))
   (:documentation "hlt: Halts the CPU, Requires privilege level 0."))
 
 (define-binary-class xlatb (zero-operand-opcode)
-  ((opcode :initform #xD7))
+  ((opcode :initform #xD7 :octets 1))
   (:documentation "Table lookup translation.
 
 Grab the contents of a table using the value in the
