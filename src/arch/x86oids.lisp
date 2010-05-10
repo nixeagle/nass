@@ -145,10 +145,6 @@ opcode. These can be encoded in a simpler manner."))
 
 There are multibyte NOPs as well, these are TBD."))
 
-(define-binary-class halt (zero-operand-opcode)
-  ((opcode :initform #xf4 :octets 1))
-  (:documentation "hlt: Halts the CPU, Requires privilege level 0."))
-
 (define-binary-class xlatb (zero-operand-opcode)
   ((opcode :initform #xD7 :octets 1))
   (:documentation "Table lookup translation.
@@ -165,13 +161,6 @@ There are two names for this, xlat and xlatb, xlatb stands for the
 assembly instruction with no arguments (explicit). xlat allows one operand
 for the purpose of documentation and is not yet supplied in this
 assembler."))
-
-(define-binary-class wait (zero-operand-opcode)
-  ((opcode :initform #x9B :octets 1))
-  (:documentation
-   "wait: Check for pending unmasked floating point exceptions.
-
-Also known as fwait."))
 
 (define-binary-class clear-carry (zero-operand-opcode)
   ((opcode :initform #xF8 :octets 1))
@@ -238,6 +227,13 @@ Reenables hardware interrupts."))
 
 This makes the CPU halt until the next interrupt. Useful to conserve
 power as it does less than constantly jumping to yourself."))
+
+(define-binary-class wait (zero-operand-opcode)
+  ((opcode :initform #x9B :octets 1))
+  (:documentation
+   "wait: Check for pending unmasked floating point exceptions.
+
+Also known as fwait."))
 
 (deftype valid-opcode-register-fields ()
   "8 valid fields for the 3 bits in an opcode (when used)."
