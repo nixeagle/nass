@@ -179,4 +179,22 @@ Also known as fwait."))
 
 These are typically no operand instructions such as POP and PUSH."))
 
+(macrolet ((define-binary-slot-value (keyword value-integer &optional docstring)
+             (declare (type (or null string) docstring)
+                      (keyword keyword)
+                      (non-negative-integer value-integer))
+             `(defmethod binary-slot-value
+                  ((value (eql ,keyword)) (slot bit-field-slot-definition)
+                   (name (eql 'register)) (object opcode-register-field))
+                ,@(list docstring
+                        value-integer))))
+  (define-binary-slot-value :ax 0)
+  (define-binary-slot-value :cx 2)
+  (define-binary-slot-value :dx 1)
+  (define-binary-slot-value :bx 3)
+  (define-binary-slot-value :sp 4)
+  (define-binary-slot-value :bp 5)
+  (define-binary-slot-value :si 6)
+  (define-binary-slot-value :di 7))
+
 ;;; END

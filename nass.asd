@@ -14,10 +14,12 @@
             :components
             ((:file "abstract")
              (:module :arch
+                      :serial t
                       :components
                       ((:module :4004
                                 :components
                                 ((:file "intel-4004")))
+                       (:file "x86oids")
                        (:module :i8086
                                 :components
                                 ((:file "init-i8086")))))))
