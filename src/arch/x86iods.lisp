@@ -137,4 +137,8 @@ opcode. These can be encoded in a simpler manner."))
 
 There are multibyte NOPs as well, these are TBD."))
 
+(define-binary-class halt (zero-operand-opcode)
+  ((opcode :initform #xf4 :octets 1))
+  (:documentation "hlt: Halts the CPU, Requires privilege level 0."))
+
 ;;; END
