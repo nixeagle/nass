@@ -21,4 +21,17 @@
 (defun hex (integer &optional (size 4))
   (format t "~&~v,'0X~%" size integer))
 
+(defvar *ndisasm-test-file-path*
+  "/some/path/that/goes/to/a/test/location/that/is/emtpy")
+
+
+(defmacro ndisasm-binary ((s &optional (path *ndisasm-test-file-path*))
+                          &body body)
+  `(progn
+     (nass.util:write-binary-file (,s ,path)
+       ,@body)
+     ,(if (find-package :trivial-shell)
+           `(funcall #',(find-symbol "SHELL-COMMAND" :trivial-shell)
+                     ,(format nil "ndisasm ~A" path))
+           `(error "Requires trivial-shell!"))))
 ;;; END
