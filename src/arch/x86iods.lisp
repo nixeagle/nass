@@ -141,4 +141,22 @@ There are multibyte NOPs as well, these are TBD."))
   ((opcode :initform #xf4 :octets 1))
   (:documentation "hlt: Halts the CPU, Requires privilege level 0."))
 
+(define-binary-class xlatb (zero-operand-opcode)
+  ((opcode :initform #xD7))
+  (:documentation "Table lookup translation.
+
+Grab the contents of a table using the value in the
+`low-accumulator-register' (AL) as the index, and destructively replaces
+the value of AL with the contents indexed by AL.
+
+  (setq low-accumulator-register
+        (aref <some table>
+              (+ DS:rBX (zero-extend low-accumulator-register))))
+
+There are two names for this, xlat and xlatb, xlatb stands for the
+assembly instruction with no arguments (explicit). xlat allows one operand
+for the purpose of documentation and is not yet supplied in this
+assembler."))
+
+
 ;;; END
