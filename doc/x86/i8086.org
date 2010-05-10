@@ -317,6 +317,14 @@ To translate a byte to AL.
 
 Nasm calls this XLATB; however, the docs say XLAT.
 
+Its XLATB for the no operand form, XLAT is used in assembly language to
+have an operand for the sole purpose of documentation, however the
+instruction in machine code never takes an operand, so the disassembler is
+going to see XLATB (the no operand version in assembly code), not XLAT as
+there is no way to recover the "documentation" operand from the machine
+code. See Intel64 manual Volume 2B page 544 for detailed information. --
+Nixeagle [2010-05-10 Mon 03:43]
+
 ** LEA - load EA to register
 
 | =76543210= | =76  543 210= |
