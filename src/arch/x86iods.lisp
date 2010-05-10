@@ -83,19 +83,6 @@ These keywords will translate to the correct binary opcodes."
            :documentation "register, immediate, indirect, indexed, direct."
            :initarg :memory)))
 
-(deftype valid-opcode-register-fields ()
-  "8 valid fields for the 3 bits in an opcode (when used)."
-  '(member :ax :bx :cx :dx :sp :dp :si :di))
-
-(define-binary-class opcode-register-field (x86oid)
-  ((register :bits 3
-             :type valid-opcode-register-fields
-             :documentation "Access general purpose registers in opcode."
-             :initarg :register))
-  (:documentation "mixin for opcodes that use this instructin layout.
-
-These are typically no operand instructions such as POP and PUSH."))
-
 (macrolet ((define-binary-slot-value (keyword value-integer &optional docstring)
              (declare (type (or null string) docstring)
                       (keyword keyword)
@@ -177,5 +164,19 @@ assembler."))
    "wait: Check for pending unmasked floating point exceptions.
 
 Also known as fwait."))
+
+
+(deftype valid-opcode-register-fields ()
+  "8 valid fields for the 3 bits in an opcode (when used)."
+  '(member :ax :bx :cx :dx :sp :dp :si :di))
+
+(define-binary-class opcode-register-field (x86oid)
+  ((register :bits 3
+             :type valid-opcode-register-fields
+             :documentation "Access general purpose registers in opcode."
+             :initarg :register))
+  (:documentation "mixin for opcodes that use this instructin layout.
+
+These are typically no operand instructions such as POP and PUSH."))
 
 ;;; END
