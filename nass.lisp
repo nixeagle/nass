@@ -15,11 +15,11 @@
 ;;; Permission to use requested/received over irc
 ;;; Thanks to Zach Beane of Wigflip
 (defun bits (integer &optional (size 8))
-  (format t "~&~v,'0B~%" size integer))
+  (format nil "~&~v,'0B~%" size integer))
 
 ;;; Thanks to Zach Beane of Wigflip
 (defun hex (integer &optional (size 4))
-  (format t "~&~v,'0X~%" size integer))
+  (format nil "~&~v,'0X~%" size integer))
 
 (defvar *ndisasm-test-file-path*
   "/some/path/that/goes/to/a/test/location/that/is/emtpy")
