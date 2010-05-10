@@ -1,0 +1,17 @@
+* tasks
+*** TODO Define all zero operand opcodes :x86oids:
+    These are any opcodes that have no operands (arguments), and do not do
+    any special encoding inside the opcode. Some examples are things like
+    NOP, WAIT, HLT (HALT), XLATB (all already defined).
+
+    Right now the definitions have mostly been in
+    [[file:src/arch/x86oids.lisp]], but it may be appropriate to eventually
+    move this class of x86 instructions to its own file as I suspect there
+    may be at least 20 or 30 that fit this class.
+
+    Please try to be good with the documentation, XLATB to me is one of
+    the better documented of the ones defined so far. HALT, WAIT, and NOP
+    really don't have a chance for detailed docs in the way XLATB does
+    (with the fancy lisp example), but the better documented the classes
+    are, the better online assembler documentation will exist when this is
+    done.
