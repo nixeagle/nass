@@ -120,7 +120,15 @@ These keywords will translate to the correct binary opcodes."
   (define-binary-slot-value :mov-reg-const 6)
   (define-binary-slot-value :mov-mem-reg 7))
 
+(define-binary-class zero-operand-opcode (x86oid)
+  ((opcode :type non-negative-fixnum))
+  (:documentation "No arguments or mod-rem-r/m bytes.
 
+These opcodes should be able to be executed on their own.
 
+For example: HLT, NOP
+
+Do not use this for PUSH or POP or anything that includes registers in the
+opcode. These can be encoded in a simpler manner."))
 
 ;;; END
