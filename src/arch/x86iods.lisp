@@ -63,7 +63,7 @@ These keywords will translate to the correct binary opcodes."
 
 (deftype valid-direct-address-instruction-mmm ()
   "Keywords matching rr registers and 4 other addressing modes."
-  '(or valid-direct-address-instruction-mmm
+  '(or valid-direct-address-instruction-rr
     (member :immediate :indirect :indexed :direct)))
 
 ;;; END
