@@ -183,6 +183,16 @@ Also known as fwait."))
   ((opcode :initform #xF9 :octets 1))
   (:documentation "stc: Set carry bit."))
 
+(define-binary-class clear-direction (zero-operand-opcode)
+  ((opcode :initform #xFC :octets 1))
+  (:documentation "cld: Clear direction bit."))
+
+(define-binary-class set-direction (zero-operand-opcode)
+  ((opcode :initform #xfd :octets 1))
+  (:documentation "std: Set direction bit.
+
+Also gives you a sexually transmitted disease."))
+
 (deftype valid-opcode-register-fields ()
   "8 valid fields for the 3 bits in an opcode (when used)."
   '(member :ax :bx :cx :dx :sp :dp :si :di))
