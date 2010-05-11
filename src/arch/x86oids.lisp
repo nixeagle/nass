@@ -131,6 +131,7 @@ For example: HLT, NOP
 Do not use this for PUSH or POP or anything that includes registers in the
 opcode. These can be encoded in a simpler manner."))
 
+#+ ()
 (defmacro define-simple-zero-operand-opcode
     (name superclasses (opcode &optional (octets 1))
      &optional docstring)
@@ -138,10 +139,11 @@ opcode. These can be encoded in a simpler manner."))
      ((opcode :initform ,opcode :octets ,octets))
      (:documentation ,docstring)))
 
-(define-simple-zero-operand-opcode nop ()
-  (#x90) "Does no instruction.
+(define-binary-class nop (zero-operand-opcode)
+  ((opcode :initform #x90 :octets 1))
+  (:documentation "Does no instruction.
 
-There are multibyte NOPs as well, these are TBD.")
+There are multibyte NOPs as well, these are TBD."))
 
 (define-binary-class halt (zero-operand-opcode)
   ((opcode :initform #xf4 :octets 1))
