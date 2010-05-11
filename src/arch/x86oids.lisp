@@ -205,4 +205,8 @@ These are typically no operand instructions such as POP and PUSH."))
   ((opcode :bits 5 :initform #b01011)
    register))
 
+(define-binary-class dec (opcode-register-field)
+  ((opcode :bits 5 :initform #b01001)
+   register))
+
 ;;; END
