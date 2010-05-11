@@ -22,7 +22,7 @@
   (format nil "~&~v,'0X~%" size integer))
 
 (defvar *ndisasm-test-file-path*
-  "/some/path/that/goes/to/a/test/location/that/is/emtpy")
+  "/tmp/nass-ndisam-test")
 
 
 (defmacro ndisasm-binary ((s &optional (path *ndisasm-test-file-path*))
