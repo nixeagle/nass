@@ -144,10 +144,9 @@ opcode. These can be encoded in a simpler manner."))
   (:documentation "Does no instruction.
 
 There are multibyte NOPs as well, these are TBD."))
-
-(define-binary-class xlatb (zero-operand-opcode)
+(define-assembly-class (table-lookup-translation xlatb) (zero-operand-opcode)
   ((opcode :initform #xD7 :octets 1))
-  (:documentation "Table lookup translation.
+  (:documentation "xlatb: Table lookup translation.
 
 Grab the contents of a table using the value in the
 `low-accumulator-register' (AL) as the index, and destructively replaces
