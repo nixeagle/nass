@@ -161,7 +161,7 @@ assembly instruction with no arguments (explicit). xlat allows one operand
 for the purpose of documentation and is not yet supplied in this
 assembler."))
 
-(define-binary-class clear-carry (zero-operand-opcode)
+(define-assembly-class (clear-carry clc) (zero-operand-opcode)
   ((opcode :initform #xF8 :octets 1))
   (:documentation "clc: Clear carry bit.
 
@@ -170,7 +170,7 @@ operations. It is also used to denote an unsigned overflow.
 Many boolean operations use it because it is easy to set
 and clear."))
 
-(define-binary-class complement-carry (zero-operand-opcode)
+(define-assembly-class (complement-carry cmc) (zero-operand-opcode)
   ((opcode :initform #xF5 :octets 1))
   (:documentation "cmc: Complement carry bit.
 
@@ -179,7 +179,7 @@ operations. It is also used to denote an unsigned overflow.
 Many boolean operations use it because it is easy to set
 and clear."))
 
-(define-binary-class set-carry (zero-operand-opcode)
+(define-assembly-class (set-carry stc) (zero-operand-opcode)
   ((opcode :initform #xF9 :octets 1))
   (:documentation "stc: Set carry bit.
 
@@ -188,7 +188,7 @@ operations. It is also used to denote an unsigned overflow.
 Many boolean operations use it because it is easy to set
 and clear."))
 
-(define-binary-class clear-direction (zero-operand-opcode)
+(define-assembly-class (clear-direction cld) (zero-operand-opcode)
   ((opcode :initform #xFC :octets 1))
   (:documentation "cld: Clear direction bit.
 
@@ -196,7 +196,7 @@ The direction flag controls what happens after operating on a string
 element. If 0, si and di are incremented by 1. If 1, si and di are
 decremented by 1."))
 
-(define-binary-class set-direction (zero-operand-opcode)
+(define-assembly-class (set-direction std) (zero-operand-opcode)
   ((opcode :initform #xfd :octets 1))
   (:documentation "std: Set direction bit.
 
@@ -206,7 +206,7 @@ The direction flag controls what happens after operating on a string
 element. If 0, si and di are incremented by 1. If 1, si and di are
 decremented by 1."))
 
-(define-binary-class clear-interrupt (zero-operand-opcode)
+(define-assembly-class (clear-interrupt cli) (zero-operand-opcode)
   ((opcode :initform #xFA :octets 1))
   (:documentation "cli: Clear interrupt bit.
 
@@ -214,20 +214,20 @@ Disables hardware interrupts. Note that the non-maskable interrupt
 is obviously not masked and software interrupts will not be
 masked."))
 
-(define-binary-class set-interrupt (zero-operand-opcode)
+(define-assembly-class (set-interrupt sti) (zero-operand-opcode)
   ((opcode :initform #xFB :octets 1))
   (:documentation "sti: Set interrupt bit.
 
 Reenables hardware interrupts."))
 
-(define-binary-class halt (zero-operand-opcode)
+(define-assembly-class (halt hlt) (zero-operand-opcode)
   ((opcode :initform #xF4 :octets 1))
   (:documentation "hlt: Halt.
 
 This makes the CPU halt until the next interrupt. Useful to conserve
 power as it does less than constantly jumping to yourself."))
 
-(define-binary-class wait (zero-operand-opcode)
+(define-assembly-class (wait) (zero-operand-opcode)
   ((opcode :initform #x9B :octets 1))
   (:documentation
    "wait: Check for pending unmasked floating point exceptions.
