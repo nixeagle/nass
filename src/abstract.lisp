@@ -42,5 +42,12 @@ operands were created.")
 Generally anything that acts as an addressing byte, bit, portion, whatever
 shoul superclass this."))
 
-
+(defmacro define-assembly-class
+    ((long-name &rest aliases) superclasses slots &rest options)
+  `(progn
+     (define-binary-class ,long-name ,superclasses ,slots ,@options)
+     ,@(mapcar (lambda (aliased-class)
+                 `(define-binary-class ,aliased-class  (,long-name) ()
+                                       ,@options))
+               aliases)))
 ;;; END

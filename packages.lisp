@@ -40,7 +40,7 @@
   (:use :cl :nass.util :eos))
 
 (defpackage #:nass.arch.x86oids
-  (:use :cl :nutils :eos :binary-data :convert)
+  (:use :cl :nutils :eos :binary-data :convert :nass.abstract)
   (:documentation "")
   (:shadow #:push #:pop)
   (:export #:x86oid
@@ -73,6 +73,7 @@
   (:export #:operands
            #:operand-mixin
            #:opcode
-           #:opcode-mixin))
+           #:opcode-mixin
+           #:define-assembly-class))
 
 ;;; END
