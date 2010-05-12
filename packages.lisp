@@ -39,6 +39,14 @@
 (defpackage #:nass.arch.amd64
   (:use :cl :nass.util :eos))
 
+(defpackage #:nass.abstract
+  (:use :cl :nutils :binary-data :convert)
+  (:export #:operands
+           #:operand-mixin
+           #:opcode
+           #:opcode-mixin
+           #:define-assembly-class))
+
 (defpackage #:nass.arch.x86oids
   (:use :cl :nutils :eos :binary-data :convert :nass.abstract)
   (:documentation "")
@@ -67,13 +75,5 @@
 
 (defpackage #:nass.general
   (:use :cl :nutils :binary-data))
-
-(defpackage #:nass.abstract
-  (:use :cl :nutils :binary-data :convert)
-  (:export #:operands
-           #:operand-mixin
-           #:opcode
-           #:opcode-mixin
-           #:define-assembly-class))
 
 ;;; END
