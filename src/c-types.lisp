@@ -1,6 +1,14 @@
 ;;; These are currently x86oid based.
 (in-package :nass.ctypes)
 
+(deftype bool ()
+  "Valid values are 0 and 1.
+
+Technically a boolean value can be any value, we are restricting the value
+of bool to 0 and 1 so we can take advantage of cheap boolean
+expressions. instad of branching."
+  '(mod 2))
+
 (deftype char ()
   "C chars are always 1 byte."
   '(octet 1))
