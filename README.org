@@ -18,14 +18,10 @@ not use this library with the expectation of it /working/.
   development ease.
 
 *** Non asdf-installable dependencies
-    Nass depends on [[https://github.com/nixeagle/convert][convert]], [[http://github.com/adlai/Eos][Eos]], [[http://github.com/nixeagle/nutils][nutils]], and [[http://github.com/nixeagle/binary-data][binary-data]].
+    Nass depends on [[http://github.com/adlai/Eos][Eos]], [[http://github.com/nixeagle/nutils][nutils]], and [[http://github.com/nixeagle/binary-data][binary-data]].
 
-    Installation of convert should be done by cloning the repository and
-    symlinking the system definition file =convert.asd=.
-    : git clone git://github.com/nixeagle/convert
-
-    The remaining three's installation instructions are described at
-    [[http://github.com/nixeagle/binary-data][binary-data]]. To avoid duplication of instructions, please read the
+    The remaining two dependencies installation instructions are described
+    at [[http://github.com/nixeagle/binary-data][binary-data]]. To avoid duplication of instructions, please read the
     readme file on that repository.
 
 

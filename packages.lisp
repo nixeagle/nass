@@ -1,6 +1,6 @@
 
 (defpackage #:nass.types
-  (:use :cl :eos :convert :nutils)
+  (:use :cl :eos :nutils)
   (:nicknames :nass-type)
   (:export #:nibble
            #:octet
@@ -28,6 +28,7 @@
            #:doubleword))
 
 
+#+ ()
 (defpackage #:nass.convert
   (:use :cl :nutils :convert))
 
@@ -40,7 +41,7 @@
   (:use :cl :nass.util :eos))
 
 (defpackage #:nass.abstract
-  (:use :cl :nutils :binary-data :convert)
+  (:use :cl :nutils :binary-data)
   (:export #:operands
            #:operand-mixin
            #:opcode
@@ -48,7 +49,7 @@
            #:define-assembly-class))
 
 (defpackage #:nass.arch.x86oids
-  (:use :cl :nutils :eos :binary-data :convert :nass.abstract)
+  (:use :cl :nutils :eos :binary-data :nass.abstract)
   (:documentation "")
   (:shadow #:push #:pop)
   (:export #:x86oid
@@ -58,11 +59,10 @@
   (:use :cl :nass.util :eos))
 
 (defpackage #:nass.arch.i8086
-  (:use :cl :nass.util :binary-data :convert
-        :nass.arch.x86oids))
+  (:use :cl :nass.util :binary-data :nass.arch.x86oids))
 
 (defpackage #:nass.arch.4004
-  (:use :cl :nass.util :nutils :convert :eos)
+  (:use :cl :nass.util :nutils :eos)
   (:documentation "Really old processor, this is mostly for goofing off
   and learning a bit."))
 
@@ -70,8 +70,7 @@
   (:use :cl :nass.util :eos))
 
 (defpackage #:nass.goof
-  (:use :cl :eos :nutils :binary-data)
-  (:import-from :convert #:conv))
+  (:use :cl :eos :nutils :binary-data))
 
 (defpackage #:nass.general
   (:use :cl :nutils :binary-data))
