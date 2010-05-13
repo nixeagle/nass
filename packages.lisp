@@ -29,7 +29,7 @@
 (defpackage #:nass.ctypes
   (:use :cl)
   (:import-from :nass.types #:octet)
-  (:shadow #:char)
+  (:shadow #:char #:float)
   (:documentation "Types as understood by the gnu compiler.
 
 These are descriptions of data sizes spoken about often in many assembly,
