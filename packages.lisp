@@ -26,7 +26,14 @@
            #:halfword
            #:word
            #:doubleword))
+(defpackage #:nass.ctypes
+  (:use :cl)
+  (:import-from :nass.types #:octet)
+  (:documentation "Types as understood by the gnu compiler.
 
+These are descriptions of data sizes spoken about often in many assembly,
+C, C++, and osdev manuals. We define these in this package so there is no
+ambigouity from C types to our lisp description."))
 
 #+ ()
 (defpackage #:nass.convert

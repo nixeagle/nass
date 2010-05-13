@@ -12,7 +12,8 @@
    (:module :src
             :serial t
             :components
-            ((:file "abstract")
+            ((:file "c-types")
+             (:file "abstract")
              (:module :arch
                       :serial t
                       :components
