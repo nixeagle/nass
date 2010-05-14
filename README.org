@@ -24,4 +24,14 @@ not use this library with the expectation of it /working/.
     at [[http://github.com/nixeagle/binary-data][binary-data]]. To avoid duplication of instructions, please read the
     readme file on that repository.
 
+* Credits
+  Thanks to martin brandenburg for collaborating on this with me.
 
+  Thanks to [[http://common-lisp.net/project/movitz/][movitz]] for providing examples and ideas. A copy of movitz
+  license can be found in [[file:COPYING-MOVITZ]]. There is little to no code
+  that is directly copied from the project, but some ideas for
+  implementation of this assembler. If and when code is directly copied, a
+  note as to its source will be attached in a comment containing the name
+  movitz.
+
+  Thanks to [[http://www.sbcl.org/][sbcl]] and lisp for existing, its an awesome combo!

@@ -71,5 +71,18 @@ will return the correct bit sequence as an integer.")
            (optimize (speed 3) (space 0)))
   (mod (position reg-name (the simple-vector +register-list+)) 8))
 
+;;; Inspired by movitz's assembler which is written by:
+;;; Frode Vatvedt Fjeld <frodef@acm.org>
+;;; See /COPYING-MOVITZ
+(defparameter *disassemblers*
+  (make-array (3 256) :initial-contents nil)
+  "Arrays of disassemblers for 16/32/64 bit machine code.
+
+These disassemblers are indexed by opcode.
+
+The 0th row is 16 bit, 1st row is 32 bit, 3rd row is 64 bit. Checks are
+made from the highest requested down to the lowest requested. If an opcode
+means the same thing in 16 bit as it does in 64 bit only the 16 bit
+translation needs to be defined.")
 
 ;;; END
