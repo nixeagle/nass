@@ -23,7 +23,7 @@
                        (:file "x86oids")
                        (:module :x86oid
                                 :components
-                                ((:file "mod-reg-rm-types.lisp")))
+                                ((:file "mod-reg-rm-types")))
                        (:module :i8086
                                 :components
                                 ((:file "init-i8086")))))))
