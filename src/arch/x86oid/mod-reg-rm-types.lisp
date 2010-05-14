@@ -48,6 +48,9 @@ Segment names are cs ss ds es fs gs."
   "Octets that can appear before the primary opcode."
   '(or valid-opcode-prefixes (member #x66 #x67)))
 
+(deftype lock-prefix-code ()
+  ;; DOCME!
+  '(member #xF0))
 
 ;;; OPTIMIZE: If anyone cares or thinks this is too slow: Put these in the
 ;;; order of expected use. The items closer to the front of this array
