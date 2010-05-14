@@ -38,15 +38,15 @@
      :XMM8 :XMM9 :XMM10 :XMM11 :XMM12 :XMM13 :XMM14 :XMM15
      :cr8)))
 
-(deftype valid-segment-override-prefixes ()
+(deftype segment-override-prefix-codes ()
   "Octets that override to a specific segment:
 
 Segment names are cs ss ds es fs gs."
   '(member #x2e #x36 #x3e #x26 #x64 #x65))
 
-(deftype valid-opcode-prefixes ()
+(deftype opcode-prefix-codes ()
   "Octets that can appear before the primary opcode."
-  '(or valid-opcode-prefixes (member #x66 #x67)))
+  '(or segment-override-prefix-codes (member #x66 #x67)))
 
 (deftype lock-prefix-code ()
   ;; DOCME!
