@@ -52,6 +52,10 @@ Segment names are cs ss ds es fs gs."
   ;; DOCME!
   '(member #xF0))
 
+(deftype string-instruction-prefix-codes ()
+  "Prefix octets that are allowed only for string instructions."
+  '(member #xF2 #xF3))
+
 ;;; OPTIMIZE: If anyone cares or thinks this is too slow: Put these in the
 ;;; order of expected use. The items closer to the front of this array
 ;;; will be looked up faster then the items at the end. So put the more
