@@ -75,7 +75,7 @@ will return the correct bit sequence as an integer.")
 ;;; Frode Vatvedt Fjeld <frodef@acm.org>
 ;;; See /COPYING-MOVITZ
 (defparameter *disassemblers*
-  (make-array (3 256) :initial-contents nil)
+  (make-array '(3 256) :initial-element nil :element-type '(or null list function))
   "Arrays of disassemblers for 16/32/64 bit machine code.
 
 These disassemblers are indexed by opcode.
@@ -85,4 +85,21 @@ made from the highest requested down to the lowest requested. If an opcode
 means the same thing in 16 bit as it does in 64 bit only the 16 bit
 translation needs to be defined.")
 
+(declaim (inline get-disassembler (setf get-disassembler)))
+(defun get-disassembler (opcode size)
+  "Get disassembler(s) from `*disassemblers*'."
+  (declare ((member 16 32 64) size)
+           ((mod 256) opcode)
+           (optimize (speed 3)))
+  (aref (the (simple-array (or null function list)) *disassemblers*)
+        (1- (ash size -4)) opcode))
+
+(defun (setf get-disassembler) (value opcode size)
+  (declare ((or null function list) value)
+           ((member 16 32 64) size)
+           ((mod 256) opcode)
+           (optimize (speed 3) (safety 0)))
+  (setf (aref (the (simple-array (or null function list)) *disassemblers*)
+              (1- (ash size -4)) opcode)
+        value))
 ;;; END
