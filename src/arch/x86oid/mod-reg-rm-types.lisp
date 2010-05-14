@@ -74,7 +74,7 @@ will return the correct bit sequence as an integer.")
 ;;; Inspired by movitz's assembler which is written by:
 ;;; Frode Vatvedt Fjeld <frodef@acm.org>
 ;;; See /COPYING-MOVITZ
-(defparameter *disassemblers*
+(defparameter *opcode-disassemblers*
   (make-array '(3 256) :initial-element nil :element-type '(or null list function))
   "Arrays of disassemblers for 16/32/64 bit machine code.
 
@@ -85,21 +85,27 @@ made from the highest requested down to the lowest requested. If an opcode
 means the same thing in 16 bit as it does in 64 bit only the 16 bit
 translation needs to be defined.")
 
-(declaim (inline get-disassembler (setf get-disassembler)))
-(defun get-disassembler (opcode size)
-  "Get disassembler(s) from `*disassemblers*'."
+(declaim (inline (setf opcode-disassembler)))
+
+(defun opcode-disassembler (opcode &optional (size 16))
+  "Get disassembler(s) from `*opcode-disassemblers*'."
+  ;; FIXME: SIZE should default to a dynamic variable
   (declare ((member 16 32 64) size)
            ((mod 256) opcode)
            (optimize (speed 3)))
-  (aref (the (simple-array (or null function list)) *disassemblers*)
-        (1- (ash size -4)) opcode))
+  (let ((result (aref (the (simple-array (or null function list))
+                        *opcode-disassemblers*) (ash size -5) opcode)))
+    (if result
+        result
+        (unless (= 16 size)
+          (opcode-disassembler opcode (ash size -1))))))
 
-(defun (setf get-disassembler) (value opcode size)
+(defun (setf opcode-disassembler) (value opcode &optional (size 16))
   (declare ((or null function list) value)
            ((member 16 32 64) size)
            ((mod 256) opcode)
            (optimize (speed 3) (safety 0)))
-  (setf (aref (the (simple-array (or null function list)) *disassemblers*)
-              (1- (ash size -4)) opcode)
+  (setf (aref (the (simple-array (or null function list)) *opcode-disassemblers*)
+              (ash size -5) opcode)
         value))
 ;;; END
