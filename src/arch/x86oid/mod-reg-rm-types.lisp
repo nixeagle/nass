@@ -38,6 +38,17 @@
      :XMM8 :XMM9 :XMM10 :XMM11 :XMM12 :XMM13 :XMM14 :XMM15
      :cr8)))
 
+(deftype valid-segment-override-prefixes ()
+  "Octets that override to a specific segment:
+
+Segment names are cs ss ds es fs gs."
+  '(member #x2e #x36 #x3e #x26 #x64 #x65))
+
+(deftype valid-opcode-prefixes ()
+  "Octets that can appear before the primary opcode."
+  '(or valid-opcode-prefixes (member #x66 #x67)))
+
+
 ;;; OPTIMIZE: If anyone cares or thinks this is too slow: Put these in the
 ;;; order of expected use. The items closer to the front of this array
 ;;; will be looked up faster then the items at the end. So put the more
