@@ -60,6 +60,41 @@ Segment names are cs ss ds es fs gs."
   "All prefixes that appear before an instruction."
   '(or lock-prefix-code string-instruction-prefix-codes
     opcode-prefix-codes))
+
+(defclass instruction ()
+  ((instruction-prefix
+    :accessor instruction-instruction-prefix
+    :initarg :instruction-prefix)
+   (address-size-prefix
+    :accessor instruction-address-size-prefix
+    :initarg :address-size)
+   (operand-size-prefix
+    :accessor instruction-operand-size-prefix
+    :initarg :operand-size)
+   (segment-override-prefix
+    :accessor instruction-segment-override
+    :initarg :segment-override)
+   (opcode
+    :accessor instruction-opcode
+    :initarg :opcode)
+   (mod-reg-r/m
+    :accessor instruction-mod-reg-r/m
+    :initarg :mod-reg-r/m)
+   (sib
+    :accessor instruction-sib
+    :initarg :sib)
+   (displacement
+    :accessor instruction-displacement
+    :initarg :displacement)
+   (immediate
+    :accessor instruction-immediate
+    :initarg :immediate))
+  (:documentation "X86 assembly instruction.
+
+Everything we can possibly need to make an x86 assembly instruction, if
+there is something missing for extended instruction types, add them to
+this class or inherit it."))
+
 ;;; OPTIMIZE: If anyone cares or thinks this is too slow: Put these in the
 ;;; order of expected use. The items closer to the front of this array
 ;;; will be looked up faster then the items at the end. So put the more
