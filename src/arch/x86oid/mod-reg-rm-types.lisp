@@ -14,6 +14,10 @@
   "32 bit registers."
   '(member :eax :ecx :edx :ebx :esp :ebp :esi :edi))
 
+(deftype r64 ()
+  "64 bit registers."
+  '(member :rax :rcx :rdx :rbx :rsp :rbp :rsi :rdi))
+
 (deftype mm ()
   '(member :mm0 :mm1 :mm2 :mm3 :mm4 :mm5 :mm6 :mm7))
 
