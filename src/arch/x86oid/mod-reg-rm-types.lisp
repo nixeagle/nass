@@ -169,4 +169,10 @@ translation needs to be defined.")
   (setf (aref (the (simple-array (or null function list)) *opcode-disassemblers*)
               (ash size -5) opcode)
         value))
+
+(defun push/+r (opcode-register-field)
+  (declare ((or r64 r32 r16 ) opcode-register-field))
+  (logior #x50 (encode-reg-bits opcode-register-field)))
+
+
 ;;; END
