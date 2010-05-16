@@ -48,6 +48,10 @@ ambigouity from C types to our lisp description."))
 (defpackage #:nass.arch.amd64
   (:use :cl :nass.util :eos))
 
+(defpackage #:nass.global-state
+  (:use :cl)
+  (:documentation "Dynamic variables indicating assembler state."))
+
 (defpackage #:nass.abstract
   (:use :cl :nutils :binary-data)
   (:export #:operands
