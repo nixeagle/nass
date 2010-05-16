@@ -136,7 +136,7 @@ will return the correct bit sequence as an integer.")
 ;;; Frode Vatvedt Fjeld <frodef@acm.org>
 ;;; See /COPYING-MOVITZ
 (defparameter *opcode-disassemblers*
-  (make-array '(3 256) :initial-element nil :element-type '(or null list function))
+  (make-array '(3 256) :initial-element nil :element-type '(or symbol null list function))
   "Arrays of disassemblers for 16/32/64 bit machine code.
 
 These disassemblers are indexed by opcode.
@@ -154,7 +154,7 @@ translation needs to be defined.")
   (declare ((member 16 32 64) size)
            ((mod 256) opcode)
            (optimize (speed 3)))
-  (let ((result (aref (the (simple-array (or null function list))
+  (let ((result (aref (the (simple-array (or null symbol function list))
                         *opcode-disassemblers*) (ash size -5) opcode)))
     (if result
         result
@@ -162,11 +162,11 @@ translation needs to be defined.")
           (opcode-disassembler opcode (ash size -1))))))
 
 (defun (setf opcode-disassembler) (value opcode &optional (size 16))
-  (declare ((or null function list) value)
+  (declare ((or null function list symbol) value)
            ((member 16 32 64) size)
            ((mod 256) opcode)
            (optimize (speed 3) (safety 0)))
-  (setf (aref (the (simple-array (or null function list)) *opcode-disassemblers*)
+  (setf (aref (the (simple-array (or null function symbol list)) *opcode-disassemblers*)
               (ash size -5) opcode)
         value))
 
