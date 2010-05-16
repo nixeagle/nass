@@ -1,0 +1,42 @@
+#+TITLE: sbcl notes
+
+Random notes on how sbcl works. Mostly curious in how they cross compile
+things.
+
+First lisp file run on the host lisp is =src/cold/shared.lisp=
+
+* build process
+  - make-host-1.lisp
+    - src/cold/shared.lisp
+      - src/cold/read-from-file.lisp
+        + Defines [[*READ-FROM-FILE]]
+      - src/cold/rename-package-carefully.lisp
+        + Defines [[*RENAME-PACKAGE-CAREFULLY]]
+      - src/cold/with-stuff.lisp
+        - Defines various macros that change what nicknames a package has
+          inside the macro's scope.
+      - src/cold/ansify.lisp
+        - Attempts to make sure the host lisp is suitable for portable
+          code. This stuff triest to ensure complience with the spec.
+      - src/cold/shebang.lisp
+        - Defines read-macros =#!+= and =#!-=. Used for the cross
+          compiler.
+      - OPTIONALLY: src/cold/snapshot.lisp
+        - Only when #!+SB-SHOW is set. Detects any modifications of the
+          host's common lisp package.
+      - build-order.lisp-expr
+        - Bunch of files and a very specific ordering of which goes
+          first/second and so on. Looks to me like quite a bit of the meat
+          of the sbcl build chain is specified in here.
+
+
+
+* Dictionary
+
+*** READ-FROM-FILE
+    Function reads a single lisp expression from a file. Signals an error
+    if more then one exists.
+
+*** RENAME-PACKAGE-CAREFULLY
+    Renames a package to NEW-NAME avoiding any possible undefined
+    behavior.
