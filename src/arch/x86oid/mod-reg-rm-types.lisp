@@ -170,9 +170,19 @@ translation needs to be defined.")
               (ash size -5) opcode)
         value))
 
-(defun push/+r (opcode-register-field)
-  (declare ((or r64 r32 r16 ) opcode-register-field))
-  (logior #x50 (encode-reg-bits opcode-register-field)))
+(defmacro define-single-opcode-instruction/+r (name opcode)
+  (check-type name (or simple-string symbol))
+  (check-type opcode nass.types:octet)
+  `(defun ,(format-symbol t "~A/+R" name) (opcode-register-field)
+     (declare ((or r64 r32 r16 ) opcode-register-field))
+     (logior ,opcode (encode-reg-bits opcode-register-field))))
+
+(define-single-opcode-instruction/+r push #x50)
+(define-single-opcode-instruction/+r pop #x58)
+(define-single-opcode-instruction/+r inc #x40)
+(define-single-opcode-instruction/+r dec #x48)
+;;; needs to exclude some registers as #x90 is NOP
+;;(define-single-opcode-instruction/+r xchg #x90)
 
 
 ;;; END
