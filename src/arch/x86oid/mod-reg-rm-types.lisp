@@ -184,5 +184,22 @@ translation needs to be defined.")
 ;;; needs to exclude some registers as #x90 is NOP
 ;;(define-single-opcode-instruction/+r xchg #x90)
 
+(defmacro define-single-opcode-instruction (name opcode)
+  (check-type name (or string symbol))
+  (check-type opcode (nass.types:octet))
+  `(progn
+     (defun ,(format-symbol t "ASSEMBLE-~A" name) ()
+       ,opcode)
+     (defun ,(format-symbol t "DISASSEMBLE-~A" name) (octet)
+       (declare (nass.types:octet octet))
+       (assert (= ,opcode octet))
+       ,(make-keyword (if (stringp name)
+                          (string-upcase name)
+                          name)))
+     (setf (opcode-disassembler ,opcode)
+           ',(format-symbol t "DISASSEMBLE-~A" name))))
+
+
+(define-single-opcode-instruction nop #x90)
 
 ;;; END
