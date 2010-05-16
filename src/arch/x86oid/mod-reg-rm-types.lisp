@@ -213,4 +213,11 @@ For now we return :bigger and :smaller."
   (if (logbitp 0 primary-opcode)
       :bigger
       :smaller))
+
+;;; Ugly first shot at MOV. This "works" assuming we are doing reg-reg.
+(defun assemble-mov (destination source)
+  (logior #x8800 #b11000000
+          (ash (encode-reg-bits source) 3)
+          (encode-reg-bits destination)))
+
 ;;; END
