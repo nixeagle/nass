@@ -1,5 +1,5 @@
 (asdf:defsystem :nass
-  :depends-on (:nutils :eos :flexi-streams :binary-data)
+  :depends-on (:nutils :eos :flexi-streams :binary-data :trivial-shell)
   :serial t
   :components
   ((:file "packages")
