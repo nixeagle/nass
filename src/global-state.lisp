@@ -1,5 +1,11 @@
 (in-package :nass.global-state)
 
+(defvar *assembly-unit* 8
+  "Smallest assembly unit. Most architectures will be 8 bits.
+
+Some arch's require a different size from 8 bits, for example MIX if we
+ever assemble for that.")
+
 (defvar *machine-size* 16
   "Size of machine in bits.
 
