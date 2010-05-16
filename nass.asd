@@ -12,7 +12,8 @@
    (:module :src
             :serial t
             :components
-            ((:file "c-types")
+            ((:file "global-state")
+             (:file "c-types")
              (:file "abstract")
              (:module :arch
                       :serial t
