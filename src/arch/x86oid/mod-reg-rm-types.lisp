@@ -202,4 +202,15 @@ translation needs to be defined.")
 
 (define-single-opcode-instruction nop #x90)
 
+
+;;; FIXME: Do something more sensible that gives an indication of how big
+;;; or how small if possible.
+(defun operand-size (primary-opcode)
+  "Operand size for PRIMARY-OPCODE.
+
+For now we return :bigger and :smaller."
+  (declare (nass.types:octet primary-opcode))
+  (if (logbitp 0 primary-opcode)
+      :bigger
+      :smaller))
 ;;; END
