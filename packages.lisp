@@ -50,7 +50,10 @@ ambigouity from C types to our lisp description."))
 
 (defpackage #:nass.global-state
   (:use :cl)
-  (:documentation "Dynamic variables indicating assembler state."))
+  (:documentation "Dynamic variables indicating assembler state.")
+  (:export #:*machine-size*
+           #:*architecture*
+           #:*instruction-set*))
 
 (defpackage #:nass.abstract
   (:use :cl :nutils :binary-data)
