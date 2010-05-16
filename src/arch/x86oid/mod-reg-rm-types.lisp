@@ -173,7 +173,7 @@ translation needs to be defined.")
 (defmacro define-single-opcode-instruction/+r (name opcode)
   (check-type name (or simple-string symbol))
   (check-type opcode nass.types:octet)
-  `(defun ,(format-symbol t "~A/+R" name) (opcode-register-field)
+  `(defun ,(format-symbol t "ASSEMBLE-~A/+R" name) (opcode-register-field)
      (declare ((or r64 r32 r16 ) opcode-register-field))
      (logior ,opcode (encode-reg-bits opcode-register-field))))
 
