@@ -64,7 +64,8 @@ ambigouity from C types to our lisp description."))
            #:define-assembly-class))
 
 (defpackage #:nass.arch.x86oids
-  (:use :cl :nutils :eos :binary-data :nass.abstract)
+  (:use :cl :nutils :eos :binary-data :nass.abstract
+        :nass.global-state)
   (:documentation "")
   (:shadow #:push #:pop)
   (:export #:x86oid
