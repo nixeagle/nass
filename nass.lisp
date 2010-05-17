@@ -27,6 +27,9 @@
 (defvar *nasm-test-file-path*
   "/tmp/nass-nasm-test.S")
 
+(defvar *gas-test-file-path*
+  "/tmp/nass-gas-test.S")
+
 (defmacro ndisasm-binary ((s &optional (path *ndisasm-test-file-path*))
                           &body body)
   `(progn
@@ -45,4 +48,13 @@
                      :if-does-not-exist :create)
     (princ asm-instructions s))
   (trivial-shell:shell-command (format nil "nasm -fbin -l ~A.listing ~A -o ~A.out && cat ~A.listing" file file file file)))
+
+(defun gas-string (asm-instructions &key (file *gas-test-file-path*))
+  (declare (string asm-instructions))
+  (with-open-file (s file
+                     :direction :output
+                     :if-exists :supersede
+                     :if-does-not-exist :create)
+    (princ asm-instructions s))
+  (trivial-shell:shell-command (format nil "as -acln ~A -o ~A.out" file file)))
 ;;; END
