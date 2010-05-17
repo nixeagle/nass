@@ -223,7 +223,10 @@ For now we return :bigger and :smaller."
 ;;; Ugly first shot at MOV. This "works" assuming we are doing reg-reg.
 (defun assemble-mov (destination source)
   (declare (mod-rem-r/m-register destination source))
-  (logior #x8800 (reg-reg destination source)))
+  (logior (etypecase destination
+            (r8 #x8800)
+            (r16 #x8900))
+          (reg-reg destination source)))
 
 
 ;;; END
