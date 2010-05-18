@@ -38,6 +38,19 @@ those are unix like but no promises.
     number =3= back to you. When you are done playing with it, exit it by
     =(sb-ext:quit)=.
 
+*** GNU/Emacs
+    This is optional.[fn:1] If you don't want to install emacs, see
+    [[*rlwrap]].
+
+    On debian systems, doing the following works:
+    : aptitude install emacs
+
+    We want to be using the gui version of emacs, especially if you are
+    new to the editor. The menu bar at the top contains some of the most
+    common emacs commands. All the entriesl have the appropriate keyboard
+    combination next to the command name. Learning the keys starts with
+    using the menu extensively until the shortcuts are memorized. Look in
+    [[*Tips]] for more general emacs advice.
 *** rlwrap
     This is a GNU readline wrapper. If you are using emacs, you do not
     need to install this.
