@@ -51,6 +51,59 @@ those are unix like but no promises.
     combination next to the command name. Learning the keys starts with
     using the menu extensively until the shortcuts are memorized. Look in
     [[*Tips]] for more general emacs advice.
+
+***** Slime
+      Lisp works best when the [[http://common-lisp.net/project/slime/][slime]] repl is used. Grab a copy from the
+      source repository as the released version is over a year old.
+      : cd ~/lisp && git clone  git://github.com/nablaone/slime.git
+
+      Now tell Emacs where slime is by editing your [[config file]], usually
+      at =~/.emacs= or =~/.emacs.d/init.el=, and add the following:
+
+      #+BEGIN_SRC elisp
+      ;;; Tell emacs where slime/swank is.
+      (add-to-list 'load-path "~/lisp/slime")
+      (add-to-list 'load-path "~/lisp/slime/contrib)
+
+      ;;; various libraries that slime will use, plus slime!
+      (require 'inf-lisp)
+      (require 'slime)
+      (require 'inferior-slime)
+      (require 'slime-autodoc)
+
+      ;;; Add more lisps to this lisp if/when you have them.
+      (setq slime-lisp-implementations
+        '((sbcl ("sbcl"))))
+
+      (slime-setup '(slime-repl  slime-fancy-inspector slime-asdf
+                                 slime-parse slime-mrepl
+                                 slime-autodoc
+                                 slime-references
+                                 slime-sprof
+                                 slime-fancy))
+      #+END_SRC
+
+      Now restart your emacs to load this file in. To test and see if sbcl
+      and emacs are properly setup hit =M-x slime RET=. If this notation
+      confuses you, please skip down to  [[*reading keyboard shortcuts]].
+      After this you should see a lisp repl show up.
+
+***** Tips
+******* reading keyboard shortcuts
+        Emacs key notations for commands is a little odd, but these short
+        forms are portable across keyboards and operating systems. The two
+        primary ones are =C-<something>= and
+        =M-<something>=. =C-<something>= means control + some other
+        key. =M-<something>= means alt plus some other key. Your control
+        and alt keys may be labeled something else.
+
+******* Config File
+        #+ <<config file>>
+        Emacs is configured with emacs lisp, the same language most of the
+        editor is written in. Find this file at =~/.emacs= or
+        =~/.emacs.d/init.el=. Make sure if you use =~/.emacs= that
+        =~/.emacs.d/init.el= _does *not* exist_.
+
 *** rlwrap
     This is a GNU readline wrapper. If you are using emacs, you do not
     need to install this.
@@ -78,6 +131,7 @@ with the two systems is on par with advanced IDEs for other languages.
 derivatives of ubuntu. Anything that has =apt-get= or =aptitude= is debian
 based.
 
-[fn:4] REPLs in lisp is shorthand for /Read Eval Print Loop/.
+# <<<repl>>>
+[fn:4] REPL in lisp is shorthand for /Read Eval Print Loop/.
 
 [fn:5] RET is emacs speak for the return or enter key.
