@@ -34,12 +34,11 @@
 
 (deftype mod-rem-r/m-register ()
   "All valid x86oid register names."
-  '(or r8 r16 r32 mm xmm 16-bit-segment-register eee
+  '(or r8 r16 r32 r64 mm xmm 16-bit-segment-register eee
     ;; FIXME: These below should become their own subtypes
     (member :r8b :r9b :r10b :r11b :r12b :r13b :r14b :r15b
      :r8w :r9w :r10w :r11w :r12w :r13w :r14w :r15w
      :r8d :r9d :r10d :r11d :r12d :r13d :r14d :r15d
-     :r8 :r9 :r10 :r11 :r12 :r13 :r14 :r15
      :XMM8 :XMM9 :XMM10 :XMM11 :XMM12 :XMM13 :XMM14 :XMM15
      :cr8)))
 
