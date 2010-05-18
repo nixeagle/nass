@@ -16,7 +16,8 @@
 
 (deftype r64 ()
   "64 bit registers."
-  '(member :rax :rcx :rdx :rbx :rsp :rbp :rsi :rdi))
+  '(member :rax :rcx :rdx :rbx :rsp :rbp :rsi :rdi
+    :r8 :r9 :r10 :r11 :r12 :r13 :r14 :r15))
 
 (deftype mm ()
   '(member :mm0 :mm1 :mm2 :mm3 :mm4 :mm5 :mm6 :mm7))
