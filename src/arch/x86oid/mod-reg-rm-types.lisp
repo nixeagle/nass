@@ -220,6 +220,20 @@ For now we return :bigger and :smaller."
           (ash (encode-reg-bits source) 3)
           (encode-reg-bits destination)))
 
+(defclass displacement ()
+  ((from :initform 0
+         :type non-negative-integer
+         :accessor displacement-from
+         :initarg :from)
+   (to :initform 0
+       :accessor displacement-to
+       :initarg :to)
+   (segment :initform :ds
+            :type segment-register
+            :accessor displacement-segment
+            :initarg :segment))
+  (:documentation "Describe how far to displace."))
+
 ;;; Ugly first shot at MOV. This "works" assuming we are doing reg-reg.
 (defun assemble-mov (destination source &key (size *machine-size*))
   (declare (mod-rem-r/m-register destination source)
