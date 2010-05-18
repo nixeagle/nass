@@ -25,7 +25,7 @@
 (deftype xmm ()
   '(member :xmm0 :xmm1 :xmm2 :xmm3 :xmm4 :xmm5 :xmm6 :xmm7))
 
-(deftype 16-bit-segment-register ()
+(deftype segment-register ()
   "sreg: Segment register names."
   '(member :es :cs :ss :ds :fs :gs))
 
@@ -34,7 +34,7 @@
 
 (deftype mod-rem-r/m-register ()
   "All valid x86oid register names."
-  '(or r8 r16 r32 r64 mm xmm 16-bit-segment-register eee
+  '(or r8 r16 r32 r64 mm xmm segment-register eee
     ;; FIXME: These below should become their own subtypes
     (member :r8b :r9b :r10b :r11b :r12b :r13b :r14b :r15b
      :r8w :r9w :r10w :r11w :r12w :r13w :r14w :r15w
