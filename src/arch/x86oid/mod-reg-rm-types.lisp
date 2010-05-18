@@ -234,6 +234,12 @@ For now we return :bigger and :smaller."
             :initarg :segment))
   (:documentation "Describe how far to displace."))
 
+(defun direct (address &key (displaced-from 0) (segment :ds))
+  (make-instance 'displacement
+                 :segment segment
+                 :to address
+                 :from displaced-from))
+
 ;;; Ugly first shot at MOV. This "works" assuming we are doing reg-reg.
 (defun assemble-mov (destination source &key (size *machine-size*))
   (declare (mod-rem-r/m-register destination source)
