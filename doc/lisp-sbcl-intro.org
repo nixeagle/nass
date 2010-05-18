@@ -38,6 +38,19 @@ those are unix like but no promises.
     number =3= back to you. When you are done playing with it, exit it by
     =(sb-ext:quit)=.
 
+*** rlwrap
+    This is a GNU readline wrapper. If you are using emacs, you do not
+    need to install this.
+
+    Installing rlwrap on a debian based system[fn:3] looks like:
+    : aptitude install rlwrap
+
+    Using rlwrap with sbcl looks like:
+    : rlwrap sbcl
+
+    Calling it with rlwrap means prompt history is kept and deleting
+    letters/going backwards in the command prompt works. There is a pretty
+    good set of [[http://utopia.knoware.nl/~hlub/uck/rlwrap/rlwrap.html][documentation]].
 
 * notes
   Slime:
