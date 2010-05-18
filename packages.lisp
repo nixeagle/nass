@@ -66,6 +66,7 @@ ambigouity from C types to our lisp description."))
 (defpackage #:nass.arch.x86oids
   (:use :cl :nutils :eos :binary-data :nass.abstract
         :nass.global-state)
+  (:nicknames #:n-x86oid)
   (:documentation "")
   (:shadow #:push #:pop)
   (:export #:x86oid
