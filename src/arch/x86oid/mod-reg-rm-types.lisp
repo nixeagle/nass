@@ -221,11 +221,18 @@ For now we return :bigger and :smaller."
           (encode-reg-bits destination)))
 
 ;;; Ugly first shot at MOV. This "works" assuming we are doing reg-reg.
-(defun assemble-mov (destination source)
-  (declare (mod-rem-r/m-register destination source))
+(defun assemble-mov (destination source &key (size *machine-size*))
+  (declare (mod-rem-r/m-register destination source)
+           ((member 16 32 64) size))
   (logior (etypecase destination
-            (r8 #x8800)
-            (r16 #x8900))
+            (r8 (check-type source r8)
+                #x8800)
+            (r16 (check-type source r16)
+                 (assert (= 16 size))
+                 #x8900)
+            (r32 (check-type source r32)
+                 (assert (or (= 32 size) (= 64 size)))
+                 #x8900))
           (reg-reg destination source)))
 
 
