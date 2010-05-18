@@ -1,0 +1,59 @@
+Follows is an introduction to using [[http://www.sbcl.org/][sbcl]] and [[http://www.gnu.org/software/emacs/][GNU/Emacs]]. [fn:1] This guide assumes
+GNU/Linux is being used. These instructions may work with macs because
+those are unix like but no promises.
+
+* Installing tools
+  First off lets make ourselves a lisp dir:
+  : mkdir ~/lisp
+
+  Lisp's package management system usually requires a special subdir for
+  storing symlinks to lisp packages, mine is:
+  : mkdir ~/lisp/asdf
+
+  I suggest you do the same. Leave these two directories empty. They will
+  get filled up as we go along.
+
+*** SBCL
+    There are other lisp implementations, a pretty complete listing is at
+    [[http://www.cliki.net/Common%20Lisp%20implementation][clwiki]]. For this guide we use SBCL as it is a fast and free[fn:2] common
+    lisp implementation.
+
+    Building sbcl requires having an existing lisp on the system, so use
+    your package manager to grab a copy of your distro's version of
+    sbcl. For Debian based things[fn:3] use the following:
+    : aptitude install sbcl
+
+    Now grab a copy of sbcl's git source. We want the trunk build as most
+    distros don't update sbcl every release.
+    : cd ~/lisp && git clone git://sbcl.boinkor.net/sbcl
+
+    Go into the new sbcl directory and build it:
+    : cd ~/lisp/sbcl && bash make.sh
+
+    When the compile is done, install it to =/usr/local/=:
+    : cd ~/lisp/sbcl && bash install.sh
+
+    Typing =sbcl= at the command prompt should drop you into the lisp
+    repl. [fn:4] Entering =(+ 1 2)= and hitting RET[fn:5] should print the
+    number =3= back to you. When you are done playing with it, exit it by
+    =(sb-ext:quit)=.
+
+
+* notes
+  Slime:
+  :  git://github.com/nablaone/slime.git
+* Footnotes
+
+[fn:1] Emacs is not _required_ to program lisp, but the combination of
+[[http://www.gnu.org/software/emacs/][GNU/Emacs]] and slime is very hard to beat. The quality of lisp developing
+with the two systems is on par with advanced IDEs for other languages.
+
+[fn:2] BSD licensed, derived from CMUCL.
+
+[fn:3] Debian based is anything derived from debian including ubuntu and
+derivatives of ubuntu. Anything that has =apt-get= or =aptitude= is debian
+based.
+
+[fn:4] REPLs in lisp is shorthand for /Read Eval Print Loop/.
+
+[fn:5] RET is emacs speak for the return or enter key.
