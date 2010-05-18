@@ -65,9 +65,7 @@ those are unix like but no promises.
     letters/going backwards in the command prompt works. There is a pretty
     good set of [[http://utopia.knoware.nl/~hlub/uck/rlwrap/rlwrap.html][documentation]].
 
-* notes
-  Slime:
-  :  git://github.com/nablaone/slime.git
+
 * Footnotes
 
 [fn:1] Emacs is not _required_ to program lisp, but the combination of
