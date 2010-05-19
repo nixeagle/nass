@@ -310,9 +310,9 @@ For now we return :bigger and :smaller."
             :accessor segment
             :initarg :segment)))
 (defclass displacement (segment)
-  ((to :initform 0
-       :accessor displacement
-       :initarg :to))
+  ((displacement :initform 0
+                 :accessor displacement
+                 :initarg :displacement))
   (:documentation "Describe how far to displace."))
 (defclass register-indirect (segment)
   ((indirect-register :initform :bx
@@ -323,7 +323,7 @@ For now we return :bigger and :smaller."
 (defun direct (address &key (segment :ds))
   (make-instance 'displacement
                  :segment segment
-                 :to address))
+                 :displacement address))
 
 ;;; Ugly first shot at MOV. This "works" assuming we are doing reg-reg.
 (defun assemble-mov (destination source &key (size *machine-size*))
