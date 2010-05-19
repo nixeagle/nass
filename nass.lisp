@@ -11,12 +11,15 @@
 (in-package :nass.goof)
 
 
+(defun bits (value)
+  (if (zerop value)
+      "0000"
+      (apply #'concatenate 'string
+             (loop for i from (* 8 (floor (log value 256))) downto 0 by 8
+                collect (format nil "~8,'0,' ,8:B " (ldb (byte 8 i) value))))))
+
 ;;; http://paste.lisp.org/display/98095
 ;;; Permission to use requested/received over irc
-;;; Thanks to Zach Beane of Wigflip
-(defun bits (integer &optional (size 8))
-  (format nil "~&~v,'0B~%" size integer))
-
 ;;; Thanks to Zach Beane of Wigflip
 (defun hex (integer &optional (size 4))
   (format nil "~&~v,'0X~%" size integer))
