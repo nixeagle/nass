@@ -70,6 +70,14 @@ Segment names are cs ss ds es fs gs."
    (reg :initarg :reg)
    (r/m :initarg :r/m)))
 
+(defclass sib ()
+  ((scale :initarg :scale
+          :documentation "bits 7-6")
+   (index :initarg :index
+          :documentation "bits 5-3")
+   (base :initarg :base
+         :documentation "bits 2-0")))
+
 (defclass instruction ()
   ((instruction-prefix
     :accessor instruction-instruction-prefix
