@@ -66,9 +66,12 @@ Segment names are cs ss ds es fs gs."
     opcode-prefix-codes))
 
 (defclass mod-reg-r/m ()
-  ((mod :initarg :mod)
-   (reg :initarg :reg)
-   (r/m :initarg :r/m)))
+  ((mod :initarg :mod
+        :documentation "bits 7-6")
+   (reg :initarg :reg
+        :documentation "bits 5-3")
+   (r/m :initarg :r/m
+        :documentation "bits 2-0")))
 
 (defclass sib ()
   ((scale :initarg :scale
