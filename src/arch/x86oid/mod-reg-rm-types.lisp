@@ -130,6 +130,15 @@ Doing this means reversing the order of the octets.
           (encode-displacement (displacement source) 16))
     result))
 
+(defmethod encode-reg-r/m ((destination symbol)
+                           (source register-indirect)
+                           (size (eql 16)))
+  (declare ((or r8 r16 r32 mm xmm eee segment-register) destination))
+  (assert (member (register-indirect source) '(:si :di :bx)))
+  (logior #x00
+          (ash (encode-reg-bits destination) 3)
+          (+ 4 (position (register-indirect source) #(:si :di :bp :bx)))))
+
 (defmethod encode-object ((displacement displacement))
   (let* ((disp (displacement displacement))
         (disp-octet-size (floor (log disp 256))))
