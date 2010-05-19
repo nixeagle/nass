@@ -149,14 +149,13 @@ Doing this means reversing the order of the octets.
   "For example: ADD [bx+1], al
 
 Does not append displacement value."
-  (let ((indirect-register (displacement source)))
-    (logior
-     (if (> indirect-register #xFF)
-         #b10000000
-         #b01000000)
-     (ash (encode-reg-bits destination) 3)
-     (+ 4 (position (register-indirect source) #(:si :di :bp :bx)))
-     )))
+  (logior
+   (if (> (displacement source) #xFF)
+       #b10000000
+       #b01000000)
+   (ash (encode-reg-bits destination) 3)
+   (+ 4 (position (register-indirect source) #(:si :di :bp :bx)))))
+
 
 (defmethod encode-object ((displacement displacement))
   (let* ((disp (displacement displacement))
