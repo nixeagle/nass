@@ -21,7 +21,7 @@
                       ((:module :4004
                                 :components
                                 ((:file "intel-4004")))
-                       (:file "x86oids")
+                       #+ () (:file "x86oids")
                        (:module :x86oid
                                 :components
                                 ((:file "mod-reg-rm-types")))
