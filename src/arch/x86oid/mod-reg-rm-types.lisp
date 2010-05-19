@@ -156,6 +156,17 @@ Does not append displacement value."
    (ash (encode-reg-bits destination) 3)
    (+ 4 (position (register-indirect source) #(:si :di :bp :bx)))))
 
+(defmethod encode-reg-r/m ((destination symbol)
+                           (source indirect-base)
+                           (size (eql 16)))
+  (declare ((or r8 r16 r32 mm xmm eee segment-register) destination))
+  (logior
+   (ash (encode-reg-bits destination) 3)
+   (ash (position (the (member :si :di) (register-indirect source))
+                  '(:si :di))
+        (position (the (member :bx :bp) (indirect-base source))
+                  '(:bx :bp)))))
+
 
 (defmethod encode-object ((displacement displacement))
   (let* ((disp (displacement displacement))
