@@ -128,7 +128,7 @@ Doing this means reversing the order of the octets.
     (setf (ldb (byte 3 19) result) (encode-reg-bits source))
     (setf (ldb (byte 3 16) result) #b110)
     (setf (ldb (byte 8 16) result)
-          (encode-displacement (displacement-from destination) 16))
+          (encode-displacement (displacement-to destination) 16))
     result))
 
 (defmethod encode-object ((displacement displacement))
@@ -306,11 +306,7 @@ For now we return :bigger and :smaller."
           (encode-reg-bits destination)))
 
 (defclass displacement ()
-  ((from :initform 0
-         :type non-negative-integer
-         :accessor displacement-from
-         :initarg :from)
-   (to :initform 0
+  ((to :initform 0
        :accessor displacement-to
        :initarg :to)
    (segment :initform :ds
@@ -319,11 +315,10 @@ For now we return :bigger and :smaller."
             :initarg :segment))
   (:documentation "Describe how far to displace."))
 
-(defun direct (address &key (displaced-from 0) (segment :ds))
+(defun direct (address &key (segment :ds))
   (make-instance 'displacement
                  :segment segment
-                 :to address
-                 :from displaced-from))
+                 :to address))
 
 ;;; Ugly first shot at MOV. This "works" assuming we are doing reg-reg.
 (defun assemble-mov (destination source &key (size *machine-size*))
