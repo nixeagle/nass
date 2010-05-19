@@ -128,11 +128,11 @@ Doing this means reversing the order of the octets.
     (setf (ldb (byte 3 19) result) (encode-reg-bits source))
     (setf (ldb (byte 3 16) result) #b110)
     (setf (ldb (byte 8 16) result)
-          (encode-displacement (displacement-to destination) 16))
+          (encode-displacement (displacement destination) 16))
     result))
 
 (defmethod encode-object ((displacement displacement))
-  (let* ((disp (displacement-to displacement))
+  (let* ((disp (displacement displacement))
         (disp-octet-size (floor (log disp 256))))
     (values
      (loop for i from disp-octet-size downto 0
@@ -305,14 +305,15 @@ For now we return :bigger and :smaller."
           (ash (encode-reg-bits source) 3)
           (encode-reg-bits destination)))
 
-(defclass displacement ()
-  ((to :initform 0
-       :accessor displacement-to
-       :initarg :to)
-   (segment :initform :ds
+(defclass segment ()
+  ((segment :initform :ds
             :type segment-register
-            :accessor displacement-segment
-            :initarg :segment))
+            :accessor segment
+            :initarg :segment)))
+(defclass displacement (segment)
+  ((to :initform 0
+       :accessor displacement
+       :initarg :to))
   (:documentation "Describe how far to displace."))
 
 (defun direct (address &key (segment :ds))
