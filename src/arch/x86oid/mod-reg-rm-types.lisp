@@ -1,5 +1,8 @@
 (in-package :nass.arch.x86oids)
 
+(in-suite* :nisp)
+(in-suite* :nass :in :nisp)
+(in-suite* root :in :nass)
 ;;; FIXME: Are there better longer named forms of these?
 ;;; These are taken directly from the manuals and specifications.
 (deftype r8 ()
@@ -99,6 +102,23 @@ Size needs to be 16, 32, or 64 only.")
            ((or r8 r16 r32 mm xmm eee segment-register) source))
   (logior #b11000000 (reg-reg destination source)))
 
+(defun encode-displacement (displacement size)
+  "Compute x86 DISPLACEMENT of SIZE.
+
+Doing this means reversing the order of the octets.
+   #xFF01 => #x01FF."
+  (declare ((nass.types:octet 4) displacement)
+           ((member 8 16 32) size))
+  (let ((size (1- (ash size -3))))
+    (loop for i from size downto 0
+         for opp from 0 to size
+         summing (ash (ldb (byte 8 (* i 8)) displacement) (* opp 8)))))
+
+(test (encode-displacement :suite root)
+  (is (= #xFF01 (encode-displacement #x01FF 16)))
+  (is (= #x01FF (encode-displacement #xFF01 16)))
+  (is (= #xFF00FF00 (encode-displacement #x00FF00FF 32))))
+
 (defmethod encode-reg-r/m ((destination displacement)
                            (source symbol)
                            (size (eql 16)))
@@ -107,10 +127,8 @@ Size needs to be 16, 32, or 64 only.")
   (let ((result 0))
     (setf (ldb (byte 3 19) result) (encode-reg-bits source))
     (setf (ldb (byte 3 16) result) #b110)
-    (setf (ldb (byte 8 8) result)
-          (ldb (byte 8 0) (displacement-to destination)))
-    (setf (ldb (byte 8 0) result)
-          (ldb (byte 8 8) (displacement-to destination)))
+    (setf (ldb (byte 8 16) result)
+          (encode-displacement (displacement-from destination) 16))
     result))
 
 (defmethod encode-object ((displacement displacement))
