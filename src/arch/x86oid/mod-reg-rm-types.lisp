@@ -113,6 +113,14 @@ Size needs to be 16, 32, or 64 only.")
           (ldb (byte 8 8) (displacement-to destination)))
     result))
 
+(defmethod encode-object ((displacement displacement))
+  (let* ((disp (displacement-to displacement))
+        (disp-octet-size (floor (log disp 256))))
+    (values
+     (loop for i from disp-octet-size downto 0
+        for opp from 0 to disp-octet-size
+        summing (ash (ldb (byte 8 (* i 8)) disp) (* opp 8)))
+     (1+ disp-octet-size))))
 
 (defclass sib ()
   ((scale :initarg :scale
