@@ -147,6 +147,8 @@ this class or inherit it."))
     :es :cs :ss :ds :fs :gs :reserved :reserved
     :cr0 :invalid :cr2 :cr3 :cr4 :invalid :invalid :invalid
     :dr0 :dr1 :dr2 :dr3 :dr4 :dr5 :dr6 :dr7
+    ;; x87 FPU
+    :st0 :st1 :st2 :st3 :st4 :st5 :st6 :st7
     ;; These below apply only for amd64 arch.
     :r8b :r9b :r10b :r11b :r12b :r13b :r14b :r15b
     :r8w :r9w :r10w :r11w :r12w :r13w :r14w :r15w
