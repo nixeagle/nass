@@ -83,6 +83,14 @@ Segment names are cs ss ds es fs gs."
 There are no standards for 128 bit x86 machines known so far."
   '(member 16 32 64))
 
+(defgeneric encode-reg-r/m (destination source size)
+  (:documentation "For x86 only, encode the mod-reg-r/m stuff.
+
+Size needs to be 16, 32, or 64 only.")
+  (:method :before ((destination t) (source t) (size t))
+           "Check that SIZE is a `valid-x86-machine-size'."
+           (check-type size valid-x86-machine-size)))
+
 (defclass sib ()
   ((scale :initarg :scale
           :documentation "bits 7-6")
