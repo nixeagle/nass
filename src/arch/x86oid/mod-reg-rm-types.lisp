@@ -86,6 +86,11 @@ Segment names are cs ss ds es fs gs."
 There are no standards for 128 bit x86 machines known so far."
   '(member 16 32 64))
 
+;;; Needs to be more specific...
+(deftype immediate ()
+  "Anything that can be treated as an immediate value."
+  t)
+
 (defgeneric encode-reg-r/m (destination source size)
   (:documentation "For x86 only, encode the mod-reg-r/m stuff.
 
