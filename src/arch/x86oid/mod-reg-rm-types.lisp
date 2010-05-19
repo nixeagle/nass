@@ -203,7 +203,14 @@ Does not append displacement value."
          :documentation "bits 2-0")))
 
 (defclass instruction (mod-reg-r/m sib)
-  ((instruction-prefix
+  ((mnemonic :type keyword
+             :initarg :mnemonic
+             :accessor mnemonic)
+   (source :initarg :source
+           :accessor source)
+   (destination :initarg :destination
+                :accessor destination)
+   (instruction-prefix
     :accessor instruction-instruction-prefix
     :initarg :instruction-prefix)
    (address-size-prefix
