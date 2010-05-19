@@ -370,6 +370,17 @@ For now we return :bigger and :smaller."
                       :initarg :indirect
                       :type (member :bx :bp :si :di))))
 
+(defun indirect (register &optional (segment :ds))
+  (make-instance 'register-indirect
+                 :indirect register
+                 :segment segment))
+
+(defun indirect-displacement (register displacement &optional (segment :ds))
+  (make-instance 'indirect-displacement
+                 :indirect register
+                 :displacement displacement
+                 :segment segment))
+
 (defclass indirect-displacement (register-indirect displacement)
   ())
 
@@ -379,7 +390,21 @@ For now we return :bigger and :smaller."
          :initarg :base
          :type (member :bx :bp))))
 
+(defun indirect-base (register base &optional (segment :ds))
+  (make-instance 'indirect-base-displacement
+                 :indirect register
+                 :segment segment
+                 :base base))
+
 (defclass indirect-base-displacement (indirect-base displacement) ())
+
+(defun indirect-base-displacement (register base displacement
+                                   &optional (segment :ds))
+  (make-instance 'indirect-base-displacement
+                 :indirect register
+                 :displacement displacement
+                 :segment segment
+                 :base base))
 
 (defun direct (address &key (segment :ds))
   (make-instance 'displacement
