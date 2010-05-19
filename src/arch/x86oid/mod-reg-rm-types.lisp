@@ -315,6 +315,11 @@ For now we return :bigger and :smaller."
        :accessor displacement
        :initarg :to))
   (:documentation "Describe how far to displace."))
+(defclass register-indirect (segment)
+  ((indirect-register :initform :bx
+                      :accessor register-indirect
+                      :initarg :indirect
+                      :type (member :bx :bp :si :di))))
 
 (defun direct (address &key (segment :ds))
   (make-instance 'displacement
