@@ -197,7 +197,7 @@ Does not append displacement value."
    (base :initarg :base
          :documentation "bits 2-0")))
 
-(defclass instruction ()
+(defclass instruction (mod-reg-r/m sib)
   ((instruction-prefix
     :accessor instruction-instruction-prefix
     :initarg :instruction-prefix)
@@ -213,9 +213,6 @@ Does not append displacement value."
    (opcode
     :accessor instruction-opcode
     :initarg :opcode)
-   (mod-reg-r/m
-    :accessor instruction-mod-reg-r/m
-    :initarg :mod-reg-r/m)
    (sib
     :accessor instruction-sib
     :initarg :sib)
