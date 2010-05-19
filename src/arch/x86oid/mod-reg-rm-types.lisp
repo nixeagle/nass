@@ -99,6 +99,21 @@ Size needs to be 16, 32, or 64 only.")
            ((or r8 r16 r32 mm xmm eee segment-register) source))
   (logior #b11000000 (reg-reg destination source)))
 
+(defmethod encode-reg-r/m ((destination displacement)
+                           (source symbol)
+                           (size (eql 16)))
+  (declare ((or r8 r16 r32 mm xmm eee segment-register) source))
+  (assert (zerop (displacement-from destination)))
+  (let ((result 0))
+    (setf (ldb (byte 3 19) result) (encode-reg-bits source))
+    (setf (ldb (byte 3 16) result) #b110)
+    (setf (ldb (byte 8 8) result)
+          (ldb (byte 8 0) (displacement-to destination)))
+    (setf (ldb (byte 8 0) result)
+          (ldb (byte 8 8) (displacement-to destination)))
+    result))
+
+
 (defclass sib ()
   ((scale :initarg :scale
           :documentation "bits 7-6")
