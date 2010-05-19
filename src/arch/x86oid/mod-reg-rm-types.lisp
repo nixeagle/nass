@@ -32,9 +32,13 @@
 (deftype eee ()
   '(member :cr0 :cr2 :cr3 :cr4 :dr0 :dr1 :dr2 :dr3 :dr4 :dr5 :dr6 :dr7))
 
+(deftype x87-stack-register ()
+  "x87 operates with a stack, not directly addressable registers."
+  '(member :st0 :st1 :st2 :st3 :st4 :st5 :st6 :st7))
+
 (deftype mod-rem-r/m-register ()
   "All valid x86oid register names."
-  '(or r8 r16 r32 r64 mm xmm segment-register eee
+  '(or r8 r16 r32 r64 mm xmm segment-register eee x87-stack-register
     ;; FIXME: These below should become their own subtypes
     (member :r8b :r9b :r10b :r11b :r12b :r13b :r14b :r15b
      :r8w :r9w :r10w :r11w :r12w :r13w :r14w :r15w
