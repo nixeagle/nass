@@ -91,6 +91,14 @@ Size needs to be 16, 32, or 64 only.")
            "Check that SIZE is a `valid-x86-machine-size'."
            (check-type size valid-x86-machine-size)))
 
+(defmethod encode-reg-r/m ((destination symbol)
+                           (source symbol)
+                           (size (eql 16)))
+  (declare ((or r8 r16 r32 x87-stack-register
+                mm xmm) destination)
+           ((or r8 r16 r32 mm xmm eee segment-register) source))
+  (logior #b11000000 (reg-reg destination source)))
+
 (defclass sib ()
   ((scale :initarg :scale
           :documentation "bits 7-6")
