@@ -111,13 +111,17 @@ Doing this means reversing the order of the octets.
            ((member 8 16 32) size))
   (let ((size (1- (ash size -3))))
     (loop for i from size downto 0
-         for opp from 0 to size
-         summing (ash (ldb (byte 8 (* i 8)) displacement) (* opp 8)))))
+       for opp from 0 to size
+       summing (ash (ldb (byte 8 (* i 8)) displacement) (* opp 8))
+       do (print (list i opp (* i 8) (ldb (byte 4 (* i 8)) displacement)
+                       (ash (ldb (byte 8 (* i 8)) displacement) (* opp 8))))
+       )))
 
 (test (encode-displacement :suite root)
   (is (= #xFF01 (encode-displacement #x01FF 16)))
   (is (= #x01FF (encode-displacement #xFF01 16)))
-  (is (= #xFF00FF00 (encode-displacement #x00FF00FF 32))))
+  (is (= #xFF00FF00 (encode-displacement #x00FF00FF 32)))
+  (is (= #xA10F (encode-displacement #xFA1 16))))
 
 (defmethod encode-reg-r/m ((destination symbol)
                            (source displacement)
