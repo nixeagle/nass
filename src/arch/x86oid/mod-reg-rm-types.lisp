@@ -289,6 +289,9 @@ made from the highest requested down to the lowest requested. If an opcode
 means the same thing in 16 bit as it does in 64 bit only the 16 bit
 translation needs to be defined.")
 
+(defparameter *asm-mnemonic* (make-hash-table :test #'eq)
+  "Lookup table for x86 mnemonics")
+
 (declaim (inline (setf opcode-disassembler)))
 
 (defun opcode-disassembler (opcode &optional (size 16))
