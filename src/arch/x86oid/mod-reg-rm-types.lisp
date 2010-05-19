@@ -65,6 +65,11 @@ Segment names are cs ss ds es fs gs."
   '(or lock-prefix-code string-instruction-prefix-codes
     opcode-prefix-codes))
 
+(defclass mod-reg-r/m ()
+  ((mod :initarg :mod)
+   (reg :initarg :reg)
+   (r/m :initarg :r/m)))
+
 (defclass instruction ()
   ((instruction-prefix
     :accessor instruction-instruction-prefix
