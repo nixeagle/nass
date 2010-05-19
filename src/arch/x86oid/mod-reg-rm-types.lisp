@@ -73,6 +73,12 @@ Segment names are cs ss ds es fs gs."
    (r/m :initarg :r/m
         :documentation "bits 2-0")))
 
+(deftype valid-x86-machine-size ()
+  "Valid machine sizes are 16,32 and 64 bit.
+
+There are no standards for 128 bit x86 machines known so far."
+  '(member 16 32 64))
+
 (defclass sib ()
   ((scale :initarg :scale
           :documentation "bits 7-6")
