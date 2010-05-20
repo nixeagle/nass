@@ -1,5 +1,9 @@
 (in-package :nass.types)
 
+(deftype architectures ()
+  "Valid machine architecture names as keywords."
+  '(member :x86 :i8086))
+
 (deftype nibble (&optional (size 1))
   "4 bits, hexidecimal digit."
   `(unsigned-byte ,(* 4 size)))

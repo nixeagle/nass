@@ -15,7 +15,8 @@
            #:signed-word
            #:signed-double-word
            #:signed-mips-word
-           #:endian))
+           #:endian
+           #:architectures))
 
 (defpackage #:nass.types.mips
   (:use :cl)
