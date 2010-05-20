@@ -292,6 +292,14 @@ translation needs to be defined.")
 (defparameter *asm-mnemonic* (make-hash-table :test #'eq)
   "Lookup table for x86 mnemonics")
 
+(defstruct (instruction-entry (:copier nil))
+  (architecture nil :type (or null nass.types:architectures))
+  (size 16 :type (member 4 8 16 32 64 128 256 512 1024))
+  (types (error "missing arg") :type t)
+  (priority 0 :type fixnum)
+  (test-function nil :type (or null function))
+  (function (error "missing arg")))
+
 (declaim (inline (setf opcode-disassembler)))
 
 (defun opcode-disassembler (opcode &optional (size 16))
