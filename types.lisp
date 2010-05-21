@@ -12,14 +12,6 @@
   "4 bits, -8 to 7."
   `(signed-byte ,(* 4 size)))
 
-(deftype octet (&optional (size 1))
-  "8 bits, 2 `nibble's, a `byte'."
-  `(nibble ,(* 2 size)))
-
-(deftype signed-octet (&optional (size 1))
-  "8 bits, 2 `signed-nibble's. -128 to 127."
-  `(signed-nibble ,(* 2 size)))
-
 (deftype word (&optional (size 1))
   "16 bits, 2 `octet's or 2 bytes."
   `(octet ,(* 2 size)))
