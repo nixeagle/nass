@@ -23,8 +23,7 @@
   (:nicknames :mips-type)
   (:import-from :nass.types
                 :octet)
-  (:export :octet
-           #:halfword
+  (:export #:halfword
            #:word
            #:doubleword))
 (defpackage #:nass.ctypes
@@ -83,6 +82,11 @@ ambigouity from C types to our lisp description."))
   (:use :cl :nass.util :nutils :eos)
   (:documentation "Really old processor, this is mostly for goofing off
   and learning a bit."))
+
+(defpackage #:nass.arch.arm
+  (:use :cl :nutils)
+  (:documentation "Working with the ARM manual. Nothing concrete at all
+  here yet and may not be for several months. [2010-05-21 Fri 12:59]"))
 
 (defpackage #:nass.elf
   (:use :cl :nass.util :eos))
