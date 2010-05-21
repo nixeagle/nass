@@ -59,6 +59,59 @@ Segment names are cs ss ds es fs gs."
   "Octets that can appear before the primary opcode."
   '(or segment-override-prefix-codes (member #x66 #x67)))
 
+(defclass segment ()
+  ((segment :initform :ds
+            :type segment-register
+            :accessor segment
+            :initarg :segment)))
+
+(defclass register-indirect (segment)
+  ((indirect-register :initform :bx
+                      :accessor register-indirect
+                      :initarg :indirect
+                      :type (member :bx :bp :si :di))))
+
+(defun indirect (register &optional (segment :ds))
+  (make-instance 'register-indirect
+                 :indirect register
+                 :segment segment))
+
+(defun indirect-displacement (register displacement &optional (segment :ds))
+  (make-instance 'indirect-displacement
+                 :indirect register
+                 :displacement displacement
+                 :segment segment))
+
+(defclass indirect-displacement (register-indirect displacement)
+  ())
+
+(defclass indirect-base (register-indirect)
+  ((base :initform :bx
+         :accessor indirect-base
+         :initarg :base
+         :type (member :bx :bp))))
+
+(defun indirect-base (register base &optional (segment :ds))
+  (make-instance 'indirect-base-displacement
+                 :indirect register
+                 :segment segment
+                 :base base))
+
+(defclass indirect-base-displacement (indirect-base displacement) ())
+
+(defun indirect-base-displacement (register base displacement
+                                   &optional (segment :ds))
+  (make-instance 'indirect-base-displacement
+                 :indirect register
+                 :displacement displacement
+                 :segment segment
+                 :base base))
+
+(defun direct (address &key (segment :ds))
+  (make-instance 'displacement
+                 :segment segment
+                 :displacement address))
+
 (deftype lock-prefix-code ()
   ;; DOCME!
   '(member #xF0))
@@ -91,6 +144,12 @@ There are no standards for 128 bit x86 machines known so far."
   "Anything that can be treated as an immediate value."
   t)
 
+(defclass displacement (segment)
+  ((displacement :initform 0
+                 :accessor displacement
+                 :initarg :displacement))
+  (:documentation "Describe how far to displace."))
+
 (defgeneric encode-reg-r/m (destination source size)
   (:documentation "For x86 only, encode the mod-reg-r/m stuff.
 
@@ -121,12 +180,6 @@ Doing this means reversing the order of the octets.
        do (print (list i opp (* i 8) (ldb (byte 4 (* i 8)) displacement)
                        (ash (ldb (byte 8 (* i 8)) displacement) (* opp 8))))
        )))
-
-(test (encode-displacement :suite root)
-  (is (= #xFF01 (encode-displacement #x01FF 16)))
-  (is (= #x01FF (encode-displacement #xFF01 16)))
-  (is (= #xFF00FF00 (encode-displacement #x00FF00FF 32)))
-  (is (= #xA10F (encode-displacement #xFA1 16))))
 
 (defmethod encode-reg-r/m ((destination symbol)
                            (source displacement)
@@ -374,62 +427,7 @@ For now we return :bigger and :smaller."
           (ash (encode-reg-bits source) 3)
           (encode-reg-bits destination)))
 
-(defclass segment ()
-  ((segment :initform :ds
-            :type segment-register
-            :accessor segment
-            :initarg :segment)))
-(defclass displacement (segment)
-  ((displacement :initform 0
-                 :accessor displacement
-                 :initarg :displacement))
-  (:documentation "Describe how far to displace."))
-(defclass register-indirect (segment)
-  ((indirect-register :initform :bx
-                      :accessor register-indirect
-                      :initarg :indirect
-                      :type (member :bx :bp :si :di))))
 
-(defun indirect (register &optional (segment :ds))
-  (make-instance 'register-indirect
-                 :indirect register
-                 :segment segment))
-
-(defun indirect-displacement (register displacement &optional (segment :ds))
-  (make-instance 'indirect-displacement
-                 :indirect register
-                 :displacement displacement
-                 :segment segment))
-
-(defclass indirect-displacement (register-indirect displacement)
-  ())
-
-(defclass indirect-base (register-indirect)
-  ((base :initform :bx
-         :accessor indirect-base
-         :initarg :base
-         :type (member :bx :bp))))
-
-(defun indirect-base (register base &optional (segment :ds))
-  (make-instance 'indirect-base-displacement
-                 :indirect register
-                 :segment segment
-                 :base base))
-
-(defclass indirect-base-displacement (indirect-base displacement) ())
-
-(defun indirect-base-displacement (register base displacement
-                                   &optional (segment :ds))
-  (make-instance 'indirect-base-displacement
-                 :indirect register
-                 :displacement displacement
-                 :segment segment
-                 :base base))
-
-(defun direct (address &key (segment :ds))
-  (make-instance 'displacement
-                 :segment segment
-                 :displacement address))
 
 ;;; Ugly first shot at MOV. This "works" assuming we are doing reg-reg.
 (defun assemble-mov (destination source &key (size *machine-size*))
@@ -446,5 +444,11 @@ For now we return :bigger and :smaller."
                  #x8900))
           (reg-reg destination source)))
 
+
+(test (encode-displacement :suite root)
+  (is (= #xFF01 (encode-displacement #x01FF 16)))
+  (is (= #x01FF (encode-displacement #xFF01 16)))
+  (is (= #xFF00FF00 (encode-displacement #x00FF00FF 32)))
+  (is (= #xA10F (encode-displacement #xFA1 16))))
 
 ;;; END
