@@ -51,4 +51,12 @@ You can do (concatenate 'bitstring ....) as well."
            (optimize (speed 3) (safety 1) (debug 1)))
   (make-array n :element-type 'bit :initial-element 1))
 
+
+(defun extract-bitstring (x &rest integers))
+
+(defgeneric %extract-bitstring (x integers)
+  (declare (optimize (speed 3) (safety 1) (debug 1)))
+  (:documentation "Extract bits from X.
+
+concat results if more then one INTEGERS are supplied."))
 ;;; END
