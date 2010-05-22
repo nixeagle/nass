@@ -71,4 +71,12 @@ You can do (concatenate 'bitstring ....) as well."
   (:documentation "Extract bits from X.
 
 concat results if more then one INTEGERS are supplied."))
+
+(defmethod %extract-bitstring ((bitstring simple-bit-vector) (position integer))
+  (assert (< position (length bitstring)))
+  (bitstring (sbit bitstring (- (length bitstring) position 1))))
+
+(defmethod %extract-bitstring ((integer integer) (position integer))
+  (bitstring (ldb (byte 1 position) integer)))
+
 ;;; END
