@@ -19,4 +19,11 @@
   (declare (bitstring bitstring))
   (aref bitstring 0))
 
+(defun concatenate-bitstrings (bitstring1 bitstring2)
+  "Concat BITSTRING1 and BITSTRING2.
+
+You can do (concatenate 'bitstring ....) as well."
+  (declare (bitstring bitstring1 bitstring2))
+  (concatenate 'bitstring bitstring1 bitstring2))
+
 ;;; END
