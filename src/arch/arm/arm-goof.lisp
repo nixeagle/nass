@@ -14,6 +14,18 @@
            (optimize (speed 3) (safety 1) (debug 1)))
   (make-array length :element-type 'bit :initial-element 0))
 
+(declaim (inline bitstring)
+         (ftype (function (&rest bit) bitstring) bitstring))
+(defun bitstring (&rest bits)
+  (declare (dynamic-extent bits)
+           (optimize (speed 3) (debug 1) (safety 0)))
+  ;; With sbcl we can rely on make-array to catch invalid inputs, we
+  ;; really can't verify valid inputs with safety 1 anyway as any length
+  ;; is a valid length, and there is no way to do a cons type check with
+  ;; dynamic-extent in effect.
+  (make-array (the (integer 0 #.(- most-positive-fixnum 63))
+                (length bits)) :element-type 'bit :initial-contents bits))
+
 (defun top-bit (bitstring)
   "Grab most significent bit."
   (declare (bitstring bitstring))
