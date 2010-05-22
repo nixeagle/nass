@@ -38,4 +38,17 @@ You can do (concatenate 'bitstring ....) as well."
             bitstring))))
 
 
+(declaim (inline zeros ones))
+(defun zeros (n)
+  "Make a `bitstring' of 0s."
+  (declare (positive-fixnum n)
+           (optimize (speed 3) (safety 1) (debug 1)))
+  (make-bitstring n))
+
+(defun ones (n)
+  "Make a `bitstring' of 1s."
+  (declare ((integer 1 #.(- most-positive-fixnum 63)) n)
+           (optimize (speed 3) (safety 1) (debug 1)))
+  (make-array n :element-type 'bit :initial-element 1))
+
 ;;; END
