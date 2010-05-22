@@ -17,6 +17,7 @@
 (declaim (inline bitstring)
          (ftype (function (&rest bit) bitstring) bitstring))
 (defun bitstring (&rest bits)
+  "Make a `simple-bit-array' of BITS."
   (declare (dynamic-extent bits)
            (optimize (speed 3) (debug 1) (safety 0)))
   ;; With sbcl we can rely on make-array to catch invalid inputs, we
