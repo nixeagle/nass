@@ -3,7 +3,9 @@
 (deftype bitstring (&optional (length '*))
   "Finite length bit-vector. Smallest length is 1."
   (check-type length (or positive-fixnum (member *)))
-  `(bit-vector ,length))
+  (if (eq '* length)
+      'simple-bit-vector
+      `(simple-bit-vector (,length))))
 
 (declaim (inline make-bitstring))
 (defun make-bitstring (length)
@@ -11,3 +13,10 @@
   (declare ((integer 1 #.(- most-positive-fixnum 63)) length)
            (optimize (speed 3) (safety 1) (debug 1)))
   (make-array length :element-type 'bit :initial-element 0))
+
+(defun top-bit (bitstring)
+  "Grab most significent bit."
+  (declare (bitstring bitstring))
+  (aref bitstring 0))
+
+;;; END
