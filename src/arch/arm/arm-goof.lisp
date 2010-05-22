@@ -26,4 +26,16 @@ You can do (concatenate 'bitstring ....) as well."
   (declare (bitstring bitstring1 bitstring2))
   (concatenate 'bitstring bitstring1 bitstring2))
 
+(defun replicate-bitstring
+    (bitstring times &aux (length (length bitstring)))
+  "Repeat BITSTRING by TIMES."
+  (declare (bitstring bitstring)
+           ((integer 0 #.(isqrt most-positive-fixnum)) times length)
+           (optimize (speed 3) (safety 1)))
+  (let ((result (make-bitstring (* length times))))
+    (dotimes (i times result)
+      (setf (subseq result (* i length) (+ (* i length) length))
+            bitstring))))
+
+
 ;;; END
