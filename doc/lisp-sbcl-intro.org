@@ -63,7 +63,7 @@ those are unix like but no promises.
       #+BEGIN_SRC elisp
       ;;; Tell emacs where slime/swank is.
       (add-to-list 'load-path "~/lisp/slime")
-      (add-to-list 'load-path "~/lisp/slime/contrib)
+      (add-to-list 'load-path "~/lisp/slime/contrib")
 
       ;;; various libraries that slime will use, plus slime!
       (require 'inf-lisp)
