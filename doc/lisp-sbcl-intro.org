@@ -84,8 +84,9 @@ those are unix like but no promises.
       #+END_SRC
 
       Now restart your emacs to load this file in. To test and see if sbcl
-      and emacs are properly setup hit =M-x slime RET=. If this notation
-      confuses you, please skip down to  [[*reading keyboard shortcuts]].
+      and emacs are properly setup hit =M-x slime RET= where =M-x= 
+      is likely your Alt key on a standard PC and RET is your return or enter key. 
+      If this notation confuses you, please skip down to  [[*reading keyboard shortcuts]].
       After this you should see a lisp repl show up.
 
 ***** Tips
